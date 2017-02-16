@@ -3,8 +3,8 @@ from triangula.input import SixAxis, SixAxisResource
 import time
 import smbus
 import os
-import hcsr04
-import piconzero
+import hcsr04 as hc
+import piconzero as pz
 
 #__________________________________________________________________
 #Intialise the display - from http://www.raspberrypi-spy.co.uk/2015/05/using-an-i2c-enabled-lcd-screen-with-the-raspberry-pi/
@@ -81,6 +81,12 @@ def lcd_string(message,line):
     lcd_byte(ord(message[i]),LCD_CHR)
 
 #__________________________________________________________________
+#initiate piconzero
+
+pz.init()
+pz.setInputConfig(0,0) #developer switch is input 0 and digital
+
+#__________________________________________________________________
 #Functions for individual programs
 
 #__________________________________________________________________
@@ -88,6 +94,78 @@ def lcd_string(message,line):
 
 def remotecontrol:
     print ("Remote Control Program Active")
+    lcd_string("Remote Control  <",LCD_LINE_1)
+    lcd_string("Select Ends     <",LCD_LINE_2)
+    RUN = 1
+    while RUN == 1:
+        x = joystick.axes[0].corrected_value()
+        y = joystick.axes[1].corrected_value()
+        if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+            RUN = 0
+        elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
+            x = abs(x)
+            y = abs(y)
+            r = 0
+            l = 0
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)    
+        elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
+            x = abs(x)
+            y = abs(y)
+            r = 100 * y
+            l = 100 * y
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+        elif 0.1 >= x >= -0.1 and y >= 0.1: #full speed backwards
+            x = abs(x)
+            y = abs(y)
+            r = 100 * y
+            l = 100 * y
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r) 
+        elif x <= -0.1 and 0.1 >= y >= -0.1: #spin right
+            x = abs(x)
+            y = abs(y)
+            r = -100 * x
+            l = 100 * x
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+        elif x >= 0.1 and 0.1 >= y >= -0.1: #spin left
+            x = abs(x)
+            y = abs(y)
+            r = 100 * x
+            l = -100 * x
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r) 
+        elif -0.9 < x < -0.1 and -0.9 < y < -0.1: #turnR - forwards
+            x = abs(x)
+            y = abs(y)
+            r = 100 * x * (1-y)
+            l = 100 * x
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+        elif 0.9 > x > 0.1 and -0.9 < y < -0.1: #turnL - forwards
+            x = abs(x)
+            y = abs(y)
+            r = 100 * x
+            l = 100 * x * (1-y)
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+        elif 0.9 > x > 0.1 and 0.1 > y > 0.1: #turnL - backwards
+            x = abs(x)
+            y = abs(y)
+            r = -100 * x
+            l = -100 * x * (1-y)
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+        elif x < -0.1 and y > 0.1: #turnR - backwards
+            x = abs(x)
+            y = abs(y)
+            r = -100 * x * (1-y)
+            l = -100 * x 
+            pz.setMotor(leftmotor,l)
+            pz.setMotor(rightmotor,r)
+    
 
 def linefollow:
     print ("Line Following Program Active")
@@ -103,7 +181,7 @@ def wallstop:
 
 #__________________________________________________________________
 #Main program
-
+MAINRUN = 1
 
 #LCD prompt
 COUNTDOWN = 9
@@ -116,17 +194,35 @@ while COUNTDOWN > 0:
 
 # Get a joystick
 with SixAxisResource() as joystick:
-    while 1:
+    
+    #Main loop - using this for the menu system
+    while MAINRUN == 1:
         lcd_string("Main Menu       <",LCD_LINE_1)
         lcd_string("Select Program  <",LCD_LINE_2)
+
         buttons_pressed = joystick.get_and_clear_button_press_history()
-        x = joystick.axes[0].corrected_value()
-        y = joystick.axes[1].corrected_value()
-        if buttons_pressed & 1 << SixAxis.BUTTON_START:
-            lcd_string("Shutting Down   <",LCD_LINE_1)
+
+        if pz.readInput(0) == 1: #check for developer switch activation and if positive kill program
+            lcd_string("Killing Program <",LCD_LINE_1)
             lcd_string("                <",LCD_LINE_2)
             time.sleep(5)
-            os.system("shutdown now -h")
+            lcd_string("Program Dead    <",LCD_LINE_1)
+            lcd_string("                <",LCD_LINE_2)
+            time.sleep(2)
+            pz.cleanup()
+            MAINRUN = 0
+        elif buttons_pressed & 1 << SixAxis.BUTTON_START: #shutdown the pi if start is pressed
+            lcd_string("Shutting Down   <",LCD_LINE_1)
+            lcd_string("Confirm?        <",LCD_LINE_2)
+            time.sleep(2)
+            if buttons_pressed & 1 << SixAxis.BUTTON_START:
+                os.system("shutdown now -h")
+            else:
+                lcd_string("Shut Down       <",LCD_LINE_1)
+                lcd_string("Cancelled       <",LCD_LINE_2)
+                time.sleep(2)
+                lcd_string("Main Menu       <",LCD_LINE_1)
+                lcd_string("Select Program  <",LCD_LINE_2)
         elif buttons_pressed & 1 << SixAxis.BUTTON_SQUARE:
             lcd_string("Starting.....   <",LCD_LINE_1)
             lcd_string("Remote Control  <",LCD_LINE_2)

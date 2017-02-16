@@ -21,7 +21,7 @@ while True:
     pygame.event.pump()
     x = pad.get_axis(0) 
     y = pad.get_axis(1)
-    if 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
+    elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
         x = abs(x)
         y = abs(y)
         r = 0
