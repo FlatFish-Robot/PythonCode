@@ -83,8 +83,22 @@ def lcd_string(message,line):
 #__________________________________________________________________
 #initiate piconzero
 
-pz.init()
+pz.init() #initiate hardware
+
 pz.setInputConfig(0,0) #developer switch is input 0 and digital
+pz.setInputConfig(1,0) #right IR sensor is input 1 and digital
+pz.setInputConfig(2,0) #left IR sensor is input 2 and digital
+pz.setInputConfig(3,0) #right line sensor is input 3 and digital
+pz.setInputConfig(4,0) #left line is input 4 and digital
+
+DEVELOPER = pz.readInput(0) #assign developer switch to variable
+RIGHTIR = pz.readInput(1) #assign right IR to a variable
+LEFTIR = pz.readInput(2) #assign left IR to a variable
+RIGHTLINE = pz.readInput(3) #assign right line sensor to a variable
+LEFTLINE = pz.readInput(4) #assign left line sensor to a variable
+
+hcsr04.init() #initiate hardware
+RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 
 #__________________________________________________________________
 #Functions for individual programs
@@ -169,15 +183,87 @@ def remotecontrol:
 
 def linefollow:
     print ("Line Following Program Active")
+    lcd_string("Line Following  <",LCD_LINE_1)
+    lcd_string("Select Ends     <",LCD_LINE_2)
+    RUN = 1
+    while RUN == 1:
+        if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+            RUN = 0
+        elif RIGHTLINE == BACKGROUND and LEFTLINE == BACKGROUND:
+            pz.forward(100)
+        elif RIGHTLINE == LINE and LEFTLINE == BACKGROUND:
+            pz.spinRight(40)
+        elif RIGHTLINE == BACKGROUND and LEFTLINE == LINE:
+            pz.spinLeft(40)
+        elif RIGHTLINE == LINE and LEFTLINE == LINE:
+            pz.reverse(70)
 
 def automaze:
     print("Automaze Program Active")
+    lcd_string("Automaze        <",LCD_LINE_1)
+    lcd_string("Select Ends     <",LCD_LINE_2)
+    LINE = 0 #set reflectivity - swap with BACKGROUND to invert
+    BACKGROUND = 1 #set reflectivity - swap with LINE to invert
+    RUN = 1
+    while RUN == 1:
+        if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+            RUN = 0
+        
 
 def autospeed:
     print("Autospeed Program Active")
+    lcd_string("Autospeed       <",LCD_LINE_1)
+    lcd_string("Select Ends     <",LCD_LINE_2)
+    RUN = 1
+    while RUN == 1:
+        if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+            RUN = 0
+        elif RIGHTIR == 0 and LEFTIR == 0:
+            pz.forward(100)
+        elif RIGHTIR == 1 and LEFTIR == 0:
+            pz.reverse(40)
+            time.sleep(1)
+            pz.spinLeft(40)
+            time.sleep(0.3)
+        elif RIGHTIR == 0 and LEFTIR == 1:
+            pz.reverse(40)
+            time.sleep(1)
+            pz.spinRight(40)
+            time.sleep(0.3)
 
 def wallstop:
     print("Wall Stop Program Active")
+    lcd_string("Wallstop        <",LCD_LINE_1)
+    lcd_string("Select Ends     <",LCD_LINE_2)
+    RUN = 1
+    while RUN == 1:
+        if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+            RUN = 0
+        elif RANGE > 10:
+            pz.forward(100)
+            lcd_string("Range=          <",LCD_LINE_1)
+            lcd_string(RANGE."     <",LCD_LINE_2)
+        elif 5 < RANGE =< 10:
+            pz.forward(40)
+            lcd_string("Range=          <",LCD_LINE_1)
+            lcd_string(RANGE."     <",LCD_LINE_2)
+        elif 2 < RANGE =< 5:
+            pz.forward(20)
+            lcd_string("Range=          <",LCD_LINE_1)
+            lcd_string(RANGE."     <",LCD_LINE_2)
+        elif 1 <= RANGE =< 2:
+            pz.forward(10)
+            lcd_string("Range=          <",LCD_LINE_1)
+            lcd_string(RANGE."     <",LCD_LINE_2)
+        elif RANGE < 1:
+            pz.stop(0)
+            lcd_string("Range=          <",LCD_LINE_1)
+            lcd_string(RANGE."     <",LCD_LINE_2)
+            time.sleep(2)
+            lcd_string("Wallstop Ended  <",LCD_LINE_1)
+            lcd_string("Select For Menu <",LCD_LINE_2)
+            time.sleep(10)
+
 
 #__________________________________________________________________
 #Main program
@@ -202,20 +288,19 @@ with SixAxisResource() as joystick:
 
         buttons_pressed = joystick.get_and_clear_button_press_history()
 
-        if pz.readInput(0) == 1: #check for developer switch activation and if positive kill program
+        pz.stop()
+
+        if DEVELOPER == 1: #check for developer switch activation and if positive kill program
             lcd_string("Killing Program <",LCD_LINE_1)
             lcd_string("                <",LCD_LINE_2)
             time.sleep(5)
-            lcd_string("Program Dead    <",LCD_LINE_1)
-            lcd_string("                <",LCD_LINE_2)
-            time.sleep(2)
-            pz.cleanup()
             MAINRUN = 0
         elif buttons_pressed & 1 << SixAxis.BUTTON_START: #shutdown the pi if start is pressed
             lcd_string("Shutting Down   <",LCD_LINE_1)
             lcd_string("Confirm?        <",LCD_LINE_2)
             time.sleep(2)
             if buttons_pressed & 1 << SixAxis.BUTTON_START:
+                pz.cleanup()
                 os.system("shutdown now -h")
             else:
                 lcd_string("Shut Down       <",LCD_LINE_1)
@@ -234,4 +319,9 @@ with SixAxisResource() as joystick:
             print ("Square Pressed")
         elif buttons_pressed & 1 << SixAxis.BUTTON_CROSS:
             print ("Square Pressed")
+
+lcd_string("Program Dead    <",LCD_LINE_1)
+lcd_string("                <",LCD_LINE_2)
+time.sleep(2)
+pz.cleanup()
 
