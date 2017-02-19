@@ -107,7 +107,7 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 #__________________________________________________________________
 #Sub routines as functions for individual programs
 
-def remotecontrol:
+def remotecontrol():
     print ("Remote Control Program Active")
     lcd_string("Remote Control  <",LCD_LINE_1)
     lcd_string("Select Ends     <",LCD_LINE_2)
@@ -182,7 +182,7 @@ def remotecontrol:
             pz.setMotor(rightmotor,r)
     
 
-def linefollow:
+def linefollow():
     print ("Line Following Program Active")
     lcd_string("Line Following  <",LCD_LINE_1)
     lcd_string("Select Ends     <",LCD_LINE_2)
@@ -199,7 +199,7 @@ def linefollow:
         elif RIGHTLINE == LINE and LEFTLINE == LINE:
             pz.reverse(70)
 
-def automaze:
+def automaze():
     print("Automaze Program Active")
     lcd_string("Automaze        <",LCD_LINE_1)
     lcd_string("Select Ends     <",LCD_LINE_2)
@@ -211,7 +211,7 @@ def automaze:
             RUN = 0
         
 
-def autospeed:
+def autospeed():
     print("Autospeed Program Active")
     lcd_string("Autospeed       <",LCD_LINE_1)
     lcd_string("Select Ends     <",LCD_LINE_2)
@@ -232,7 +232,7 @@ def autospeed:
             pz.spinRight(40)
             time.sleep(0.3)
 
-def wallstop:
+def wallstop():
     print("Wall Stop Program Active")
     lcd_string("Wallstop        <",LCD_LINE_1)
     lcd_string("Select Ends     <",LCD_LINE_2)
