@@ -243,23 +243,23 @@ def wallstop():
         elif RANGE > 10:
             pz.forward(100)
             lcd_string("Range=          <",LCD_LINE_1)
-            lcd_string(RANGE."     <",LCD_LINE_2)
-        elif 5 < RANGE =< 10:
+            lcd_string(RANGE,"     <",LCD_LINE_2)
+        elif 5 < RANGE <= 10:
             pz.forward(40)
             lcd_string("Range=          <",LCD_LINE_1)
-            lcd_string(RANGE."     <",LCD_LINE_2)
-        elif 2 < RANGE =< 5:
+            lcd_string(RANGE,"     <",LCD_LINE_2)
+        elif 2 < RANGE <= 5:
             pz.forward(20)
             lcd_string("Range=          <",LCD_LINE_1)
-            lcd_string(RANGE."     <",LCD_LINE_2)
-        elif 1 <= RANGE =< 2:
+            lcd_string(RANGE,"     <",LCD_LINE_2)
+        elif 1 <= RANGE <= 2:
             pz.forward(10)
             lcd_string("Range=          <",LCD_LINE_1)
-            lcd_string(RANGE."     <",LCD_LINE_2)
+            lcd_string(RANGE,"     <",LCD_LINE_2)
         elif RANGE < 1:
             pz.stop(0)
             lcd_string("Range=          <",LCD_LINE_1)
-            lcd_string(RANGE."     <",LCD_LINE_2)
+            lcd_string(RANGE,"     <",LCD_LINE_2)
             time.sleep(2)
             lcd_string("Wallstop Ended  <",LCD_LINE_1)
             lcd_string("Select For Menu <",LCD_LINE_2)
