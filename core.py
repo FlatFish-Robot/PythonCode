@@ -11,7 +11,7 @@ from gpiozero import Button
 #Intialise the display - from http://www.raspberrypi-spy.co.uk/2015/05/using-an-i2c-enabled-lcd-screen-with-the-raspberry-pi/
 
 # Define some device parameters
-I2C_ADDR  = 0x27 # I2C device address
+I2C_ADDR  = 0x3f # I2C device address
 LCD_WIDTH = 16   # Maximum characters per line
 
 # Define some device constants
