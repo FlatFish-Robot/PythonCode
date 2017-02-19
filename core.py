@@ -3,7 +3,7 @@ from triangula.input import SixAxis, SixAxisResource
 import time
 import smbus
 import os
-import hcsr04 as hc
+import hcsr04
 import piconzero as pz
 from gpiozero import Button
 
@@ -273,7 +273,7 @@ MAINRUN = 1
 #LCD prompt
 COUNTDOWN = 9
 while COUNTDOWN > 0:
-    DISPLAYCOUNTDOWN = "Connect PS3 - " . COUNTDOWN . "<"
+    DISPLAYCOUNTDOWN = "Connect PS3 - " , COUNTDOWN , "<"
     lcd_string("Starting Up     <",LCD_LINE_1)
     lcd_string(DISPLAYCOUNTDOWN ,LCD_LINE_2)
     time.sleep(1)
