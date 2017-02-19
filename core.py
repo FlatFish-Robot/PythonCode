@@ -41,6 +41,9 @@ def remotecontrol():
     mylcd.lcd_display_string("Select Ends", 2)
     time.sleep(2)
     RUN = 1
+    pz.forward(30)
+    time.sleep(2)
+    pz.stop()
     while RUN == 1:
         x = joystick.axes[0].corrected_value()
         y = joystick.axes[1].corrected_value()
