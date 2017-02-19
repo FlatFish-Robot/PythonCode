@@ -44,8 +44,8 @@ def remotecontrol():
     while RUN == 1:
         x = joystick.axes[0].corrected_value()
         y = joystick.axes[1].corrected_value()
-        mylcd.lcd_display_string("X: %d %%" % x, 1)
-        mylcd.lcd_display_string("Y: %d %%" % y, 2)
+        mylcd.lcd_display_string("X: %f " % x, 1)
+        mylcd.lcd_display_string("Y: %f " % y, 2)
         if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
             RUN = 0
         elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
@@ -222,6 +222,10 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Program", 2)
             time.sleep(5)
             MAINRUN = 0
+        #_______________________________________________________________________________________________________________
+
+
+
         elif buttons_pressed & 1 << SixAxis.BUTTON_START: #shutdown the pi if start is pressed
             mylcd.lcd_display_string("Shut Down", 1)
             mylcd.lcd_display_string("Confirm?", 2)
@@ -233,11 +237,91 @@ with SixAxisResource() as joystick:
                 mylcd.lcd_display_string("Shut Down", 1)
                 mylcd.lcd_display_string("Cancelled", 2)
                 time.sleep(2)
+        #_________________________________________________________________________________________________________________
+
+        
         elif buttons_pressed & 1 << SixAxis.BUTTON_SQUARE:
             mylcd.lcd_display_string("Starting", 1)
             mylcd.lcd_display_string("Remote Control", 2)
             time.sleep(2)            
-            remotecontrol()
+            print ("Remote Control Program Active")
+            mylcd.lcd_display_string("Remote Control", 1)
+            mylcd.lcd_display_string("Select Ends", 2)
+            time.sleep(2)
+            RUN = 1
+            while RUN == 1:
+                x = joystick.axes[0].corrected_value()
+                y = joystick.axes[1].corrected_value()
+                mylcd.lcd_display_string("X: %f " % x, 1)
+                mylcd.lcd_display_string("Y: %f " % y, 2)
+                if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+                    RUN = 0
+                elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
+                    x = abs(x)
+                    y = abs(y)
+                    r = 0
+                    l = 0
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)    
+                elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = 100 * y
+                    l = 100 * y
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+                elif 0.1 >= x >= -0.1 and y >= 0.1: #full speed backwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = 100 * y
+                    l = 100 * y
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r) 
+                elif x <= -0.1 and 0.1 >= y >= -0.1: #spin right
+                    x = abs(x)
+                    y = abs(y)
+                    r = -100 * x
+                    l = 100 * x
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+                elif x >= 0.1 and 0.1 >= y >= -0.1: #spin left
+                    x = abs(x)
+                    y = abs(y)
+                    r = 100 * x
+                    l = -100 * x
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r) 
+                elif -0.9 < x < -0.1 and -0.9 < y < -0.1: #turnR - forwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = 100 * x * (1-y)
+                    l = 100 * x
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+                elif 0.9 > x > 0.1 and -0.9 < y < -0.1: #turnL - forwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = 100 * x
+                    l = 100 * x * (1-y)
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+                elif 0.9 > x > 0.1 and 0.1 > y > 0.1: #turnL - backwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = -100 * x
+                    l = -100 * x * (1-y)
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+                elif x < -0.1 and y > 0.1: #turnR - backwards
+                    x = abs(x)
+                    y = abs(y)
+                    r = -100 * x * (1-y)
+                    l = -100 * x 
+                    pz.setMotor(0,l)
+                    pz.setMotor(1,r)
+        #____________________________________________________________________________________________________________________
+
+
         elif buttons_pressed & 1 << SixAxis.BUTTON_CIRCLE:
             print ("Square Pressed")
         elif buttons_pressed & 1 << SixAxis.BUTTON_TRIANGLE:
