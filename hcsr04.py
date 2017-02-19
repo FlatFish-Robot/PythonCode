@@ -15,14 +15,14 @@ import RPi.GPIO as GPIO, sys, threading, time, os, subprocess
 
 
 # Define Sonar Pin (Uses same pin for both Ping and Echo)
-sonar = 38
+sonar = 20
 
 #======================================================================
 # General Functions
 #
 def init():
     GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
 
 def cleanup():
     GPIO.cleanup()
