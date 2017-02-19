@@ -249,11 +249,15 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Select Ends", 2)
             time.sleep(2)
             RUN = 1
+            r=0
+            l=0
             while RUN == 1:
                 x = joystick.axes[0].corrected_value()
                 y = joystick.axes[1].corrected_value()
                 mylcd.lcd_display_string("X: %f " % x, 1)
                 mylcd.lcd_display_string("Y: %f " % y, 2)
+                print (r)
+                print (l)
                 if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
                     RUN = 0
                 elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
