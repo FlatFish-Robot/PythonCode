@@ -5,6 +5,7 @@ import smbus
 import os
 import hcsr04 as hc
 import piconzero as pz
+from gpiozero import Button
 
 #__________________________________________________________________
 #Intialise the display - from http://www.raspberrypi-spy.co.uk/2015/05/using-an-i2c-enabled-lcd-screen-with-the-raspberry-pi/
@@ -91,11 +92,11 @@ pz.setInputConfig(2,0) #left IR sensor is input 2 and digital
 pz.setInputConfig(3,0) #right line sensor is input 3 and digital
 pz.setInputConfig(4,0) #left line is input 4 and digital
 
-DEVELOPER = pz.readInput(0) #assign developer switch to variable
-RIGHTIR = pz.readInput(1) #assign right IR to a variable
-LEFTIR = pz.readInput(2) #assign left IR to a variable
-RIGHTLINE = pz.readInput(3) #assign right line sensor to a variable
-LEFTLINE = pz.readInput(4) #assign left line sensor to a variable
+DEVELOPER = Button(22) #assign developer switch to variable
+RIGHTIR = pz.readInput(0) #assign right IR to a variable
+LEFTIR = pz.readInput(1) #assign left IR to a variable
+RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 
 hcsr04.init() #initiate hardware
 RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
