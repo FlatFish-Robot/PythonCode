@@ -5,7 +5,7 @@ import smbus
 import os
 import hcsr04
 import piconzero as pz
-from gpiozero import Button
+#from gpiozero import Button
 import I2C_LCD_driver
 
 #__________________________________________________________________
@@ -20,7 +20,8 @@ pz.setInputConfig(2,0) #left IR sensor is input 2 and digital
 pz.setInputConfig(3,0) #right line sensor is input 3 and digital
 pz.setInputConfig(4,0) #left line is input 4 and digital
 
-DEVELOPER = Button(22) #assign developer switch to variable
+#DEVELOPER = Button(22) #assign developer switch to variable
+DEVELOPER = 0
 RIGHTIR = pz.readInput(0) #assign right IR to a variable
 LEFTIR = pz.readInput(1) #assign left IR to a variable
 RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
