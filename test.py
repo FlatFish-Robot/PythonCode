@@ -65,6 +65,7 @@ START = pad.get_button(3)
 
 
 while True:
+    pygame.event.pump()
     print(DUP)
     print(DDOWN)
     print(CIRCLE)

@@ -149,6 +149,7 @@ def courseremotecontrol():
     time.sleep(2)
     RUN = 1
     while RUN == 1:
+        pygame.event.pump()
         if SELECT == 1: # exit program
             RUN = 0
         elif DUP == 1:
@@ -185,6 +186,7 @@ while COUNTDOWN > 0:
     
 #Main loop - using this for the menu system
 while MAINRUN == 1:
+    pygame.event.pump()
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
