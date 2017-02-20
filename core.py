@@ -7,6 +7,14 @@ import piconzero as pz
 from gpiozero import Button
 import I2C_LCD_driver
 
+#_____________________________________________________________________________
+#lcd at startup
+mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
+mylcd.lcd_display_string("Script on       ", 1)
+mylcd.lcd_display_string("                ", 2)
+
+
+
 #____________________________________________________________________________________
 #pygame setup
 
@@ -20,7 +28,7 @@ pad = pygame.joystick.Joystick(0)
 #hardware setup
 
 pz.init() #initiate hardware
-mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
+
 
 
 pz.setInputConfig(0,0) #right IR sensor is input 0 and digital
