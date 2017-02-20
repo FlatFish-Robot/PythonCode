@@ -10,6 +10,13 @@ import I2C_LCD_driver
 #_____________________________________________________________________________
 #lcd at startup
 mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
+
+COUNTDOWN = 30
+while COUNTDOWN > 0:
+    mylcd.lcd_display_string("Starting up.... ", 1)
+    mylcd.lcd_display_string("       T - %d   " % COUNTDOWN, 2)
+    time.sleep(1)
+    COUNTDOWN = COUNTDOWN - 1
 mylcd.lcd_display_string("Script on       ", 1)
 mylcd.lcd_display_string("                ", 2)
 
