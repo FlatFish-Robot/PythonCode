@@ -68,8 +68,7 @@ def fineremotecontrol():
             y = abs(y)
             r = 0
             l = 0
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)    
+            pz.stop()    
         elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
             x = abs(x)
             y = abs(y)
