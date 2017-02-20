@@ -47,8 +47,8 @@ def remotecontrolcomplex():
         y = joystick.axes[1].corrected_value()
         r = 0
         l = 0
-        mylcd.lcd_display_string("X: %f " % r, 1)
-        mylcd.lcd_display_string("Y: %f " % l, 2)
+        mylcd.lcd_display_string("X: %d " % r, 1)
+        mylcd.lcd_display_string("Y: %d " % l, 2)
         if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
             RUN = 0
         elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
