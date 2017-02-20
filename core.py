@@ -64,7 +64,7 @@ START = pad.get_button(3)
 #____________________________________________________________________________________
 #functions for individual tasks
 
-def fineremotecontrol:
+def fineremotecontrol():
     RUN = 1
     mylcd.lcd_display_string("Remote Control F", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
@@ -142,7 +142,7 @@ def fineremotecontrol:
             pz.setMotor(RIGHTMOTOR,r)
         time.sleep(0.1)
 
-def courseremotecontrol:
+def courseremotecontrol():
     SPEED = 60
     mylcd.lcd_display_string("Remote Control C", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
