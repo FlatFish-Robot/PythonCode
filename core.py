@@ -45,8 +45,10 @@ def remotecontrolcomplex():
     while RUN == 1:
         x = joystick.axes[0].corrected_value()
         y = joystick.axes[1].corrected_value()
-        mylcd.lcd_display_string("X: %f " % x, 1)
-        mylcd.lcd_display_string("Y: %f " % y, 2)
+        r = 0
+        l = 0
+        mylcd.lcd_display_string("X: %f " % r, 1)
+        mylcd.lcd_display_string("Y: %f " % l, 2)
         if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
             RUN = 0
         elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
@@ -261,7 +263,7 @@ with SixAxisResource() as joystick:
         
         elif buttons_pressed & 1 << SixAxis.BUTTON_SQUARE:
             mylcd.lcd_display_string("Starting", 1)
-            mylcd.lcd_display_string("Remote Control", 2)
+            mylcd.lcd_display_string("Remote Control B", 2)
             time.sleep(2)            
             remotecontrolbasic()
             
@@ -269,7 +271,11 @@ with SixAxisResource() as joystick:
 
 
         elif buttons_pressed & 1 << SixAxis.BUTTON_CIRCLE:
-            print ("Square Pressed")
+            print ("Remote control complex")
+            mylcd.lcd_display_string("Starting", 1)
+            mylcd.lcd_display_string("Remote Control C", 2)
+            time.sleep(2)            
+            remotecontrolcomplex()
         elif buttons_pressed & 1 << SixAxis.BUTTON_TRIANGLE:
             print ("Square Pressed")
         elif buttons_pressed & 1 << SixAxis.BUTTON_CROSS:
