@@ -89,16 +89,7 @@ with SixAxisResource() as joystick:
         #____________________________________________________________________________________________________________________
 
 
-        elif buttons_pressed & 1 << SixAxis.BUTTON_CIRCLE:
-            print ("Remote control complex")
-            mylcd.lcd_display_string("Starting", 1)
-            mylcd.lcd_display_string("Remote Control C", 2)
-            time.sleep(2)            
-            remotecontrolcomplex()
-        elif buttons_pressed & 1 << SixAxis.BUTTON_TRIANGLE:
-            print ("Square Pressed")
-        elif buttons_pressed & 1 << SixAxis.BUTTON_CROSS:
-            print ("Square Pressed")
+        
 
 mylcd.lcd_display_string("Ended", 1)
 time.sleep(2)
