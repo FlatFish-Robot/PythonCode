@@ -177,7 +177,7 @@ MAINRUN = 1
 COUNTDOWN = 9
 while COUNTDOWN > 0:
     mylcd.lcd_display_string("Connect         ", 1)
-    mylcd.lcd_display_string("Controller %d %%" % COUNTDOWN, 2)
+    mylcd.lcd_display_string("Controller %d   " % COUNTDOWN, 2)
     time.sleep(1)
     COUNTDOWN = COUNTDOWN - 1
 
