@@ -96,13 +96,13 @@ while MAINRUN == 1:
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
+    keys = pygame.key.get_pressed()
     #print("in main loop")
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
         time.sleep(5)
         MAINRUN = 0
-        
     elif keys[K_1]: #when one pressed
         courseremotecontrol()
     else:
