@@ -278,12 +278,18 @@ with SixAxisResource() as joystick:
                     RUN = 0
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
                     pz.forward(100)
+                    print("Forwards")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_DOWN:
                     pz.reverse(100)
+                    print("Reverse")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_RIGHT:
                     pz.spinRight(100)
+                    print("Right")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_LEFT:
                     pz.spinLeft(100)
+                    print("Left")
+                else:
+                    RUN = 1
         #____________________________________________________________________________________________________________________
 
 
