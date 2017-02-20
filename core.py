@@ -178,6 +178,7 @@ START = pad.get_button(3)
 
 #Main program
 MAINRUN = 1
+pz.stop()
 
 #LCD prompt
 COUNTDOWN = 9
