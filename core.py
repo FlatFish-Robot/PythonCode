@@ -66,7 +66,7 @@ def courseremotecontrol():
     while RUN == 1:
         pygame.event.pump()
         keys = pygame.key.get_pressed()
-        if keys[K_ESC]: # exit program
+        if keys[K_ESCAPE]: # exit program
             RUN = 0
         if keys[K_UP]:
             pz.forward(SPEEDFR)
