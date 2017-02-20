@@ -274,9 +274,9 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Select Ends   ", 2)
             time.sleep(2)
             RUN = 1
+            buttons_pressed = joystick.get_and_clear_button_press_history()
             while RUN == 1:
                 print("In Loop")
-                buttons_pressed = joystick.get_and_clear_button_press_history()
                 if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
                     RUN = 0
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
@@ -293,6 +293,7 @@ with SixAxisResource() as joystick:
                     print("Left")
                 else:
                     RUN = 1
+                    buttons_pressed = joystick.get_and_clear_button_press_history()
                     pz.stop()
         #____________________________________________________________________________________________________________________
 
