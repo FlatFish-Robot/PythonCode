@@ -5,7 +5,7 @@ import smbus
 import os
 import hcsr04
 import piconzero as pz
-#from gpiozero import Button
+from gpiozero import Button
 import I2C_LCD_driver
 
 #__________________________________________________________________
@@ -20,7 +20,7 @@ pz.setInputConfig(2,0) #left IR sensor is input 2 and digital
 pz.setInputConfig(3,0) #right line sensor is input 3 and digital
 pz.setInputConfig(4,0) #left line is input 4 and digital
 
-#DEVELOPER = Button(22) #assign developer switch to variable
+DEVELOPER = Button(22) #assign developer switch to variable
 DEVELOPER = 0
 RIGHTIR = pz.readInput(0) #assign right IR to a variable
 LEFTIR = pz.readInput(1) #assign left IR to a variable
@@ -245,88 +245,8 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Starting", 1)
             mylcd.lcd_display_string("Remote Control", 2)
             time.sleep(2)            
-            print ("Remote Control Program Active")
-            mylcd.lcd_display_string("Remote Control", 1)
-            mylcd.lcd_display_string("Select Ends", 2)
-            time.sleep(2)
-            RUN = 1
-            r=0
-            l=0
-            pz.forward(30)
-            time.sleep(2)
-            pz.stop()
-            while RUN == 1:
-                x = joystick.axes[0].corrected_value()
-                y = joystick.axes[1].corrected_value()
-                mylcd.lcd_display_string("X: %f " % x, 1)
-                mylcd.lcd_display_string("Y: %f " % y, 2)
-                print (r)
-                print (l)
-                if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
-                    RUN = 0
-                elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
-                    x = abs(x)
-                    y = abs(y)
-                    r = 0
-                    l = 0
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)    
-                elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(100 * y)
-                    l = int(100 * y)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
-                elif 0.1 >= x >= -0.1 and y >= 0.1: #full speed backwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(100 * y)
-                    l = int(100 * y)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r) 
-                elif x <= -0.1 and 0.1 >= y >= -0.1: #spin right
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(-100 * x)
-                    l = int(100 * x)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
-                elif x >= 0.1 and 0.1 >= y >= -0.1: #spin left
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(100 * x)
-                    l = int(-100 * x)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r) 
-                elif -0.9 < x < -0.1 and -0.9 < y < -0.1: #turnR - forwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(100 * x * (1-y))
-                    l = int(100 * x)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
-                elif 0.9 > x > 0.1 and -0.9 < y < -0.1: #turnL - forwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(100 * x)
-                    l = int(100 * x * (1-y))
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
-                elif 0.9 > x > 0.1 and 0.1 > y > 0.1: #turnL - backwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(-100 * x)
-                    l = int(-100 * x * (1-y))
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
-                elif x < -0.1 and y > 0.1: #turnR - backwards
-                    x = abs(x)
-                    y = abs(y)
-                    r = int(-100 * x * (1-y))
-                    l = int(-100 * x)
-                    pz.setMotor(0,l)
-                    pz.setMotor(1,r)
+            remot
+            
         #____________________________________________________________________________________________________________________
 
 

@@ -8,8 +8,7 @@ import piconzero as pz
 #from gpiozero import Button
 #import I2C_LCD_driver
 
-#__________________________________________________________________
-#initiate piconzero and display
+
 
 pz.init() #initiate hardware
 pz.forward(100)
