@@ -1,4 +1,6 @@
 import pygame
+import sys
+from pygame.locals import *
 import time
 import smbus
 import os
@@ -26,10 +28,8 @@ mylcd.lcd_display_string("                ", 2)
 #pygame setup
 
 pygame.init()
-screen = pygame.display.set_mode((100,100))
-pygame.display.set_caption("Hello World")
-pygame.joystick.init()
-pad = pygame.joystick.Joystick(0)
+#screen = pygame.display.set_mode((100,100))
+#pygame.display.set_caption("Hello World")
 
 #____________________________________________________________________________________
 #hardware setup
@@ -52,95 +52,9 @@ LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 hcsr04.init() #initiate hardware
 RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 
-
-#initiate pad
-pad.init()
-
-#swap these if it turns the wrong way
-
-
-
 #____________________________________________________________________________________
 #functions for individual tasks
 
-def fineremotecontrol():
-    RUN = 1
-    mylcd.lcd_display_string("Remote Control F", 1)
-    mylcd.lcd_display_string("Select Ends     ", 2)
-    time.sleep(2)
-    LEFTMOTOR = 1
-    RIGHTMOTOR = 0
-    while RUN == 1:
-        pygame.event.pump()
-        x = pad.get_axis(0) 
-        y = pad.get_axis(1)
-        mylcd.lcd_display_string("X: %f " % x, 1)
-        mylcd.lcd_display_string("Y: %f " % y, 2)
-        if pad.get_button(0) == 1: #exit program
-            RUN = 0
-        elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
-            x = abs(x)
-            y = abs(y)
-            r = 0
-            l = 0
-            pz.stop()    
-        elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
-            x = abs(x)
-            y = abs(y)
-            r = int(100 * y)
-            l = int(100 * y)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        elif 0.1 >= x >= -0.1 and y >= 0.1: #full speed backwards
-            x = abs(x)
-            y = abs(y)
-            r = int(100 * y)
-            l = int(100 * y)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r) 
-        elif x <= -0.1 and 0.1 >= y >= -0.1: #spin right
-            x = abs(x)
-            y = abs(y)
-            r = int(-100 * x)
-            l = int(100 * x)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        elif x >= 0.1 and 0.1 >= y >= -0.1: #spin left
-            x = abs(x)
-            y = abs(y)
-            r = int(100 * x)
-            l = int(-100 * x)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r) 
-        elif -0.9 < x < -0.1 and -0.9 < y < -0.1: #turnR - forwards
-            x = abs(x)
-            y = abs(y)
-            r = int(100 * x * (1-y))
-            l = int(100 * x)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        elif 0.9 > x > 0.1 and -0.9 < y < -0.1: #turnL - forwards
-            x = abs(x)
-            y = abs(y)
-            r = int(100 * x)
-            l = int(100 * x * (1-y))
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        elif 0.9 > x > 0.1 and 0.1 > y > 0.1: #turnL - backwards
-            x = abs(x)
-            y = abs(y)
-            r = int(-100 * x)
-            l = int(-100 * x * (1-y))
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        elif x < -0.1 and y > 0.1: #turnR - backwards
-            x = abs(x)
-            y = abs(y)
-            r = int(-100 * x * (1-y))
-            l = int(-100 * x)
-            pz.setMotor(LEFTMOTOR,l)
-            pz.setMotor(RIGHTMOTOR,r)
-        time.sleep(0.1)
 
 def courseremotecontrol():
     SPEEDFR = 60
@@ -150,20 +64,20 @@ def courseremotecontrol():
     time.sleep(2)
     RUN = 1
     while RUN == 1:
-        pygame.event.pump()
-        if pad.get_button(0) == 1: # exit program
+        keys = pygame.key.get_pressed()
+        if keys[K_ESC]: # exit program
             RUN = 0
-        elif pad.get_button(4) == 1:
+        if keys[K_UP]:
             pz.forward(SPEEDFR)
-        elif pad.get_button(6) == 1:
+        if keys[K_DOWN]:
             pz.reverse(SPEEDFR)
-        elif pad.get_button(5) == 1:
+        if keys[K_RIGHT]:
             pz.spinRight(SPEEDT)
-        elif pad.get_button(7) == 1:
+        if keys[K_LEFT]:
             pz.spinLeft(SPEEDT)
-        else:
+        if keys[K_SPACE]:
             pz.stop()
-        time.sleep(0.1)
+        
 
 
 
@@ -171,25 +85,6 @@ def courseremotecontrol():
 
 #____________________________________________________________________________________
 #main loop
-
-
-#assign buttons
-#setup buttons
-DUP = pad.get_button(4)
-DDOWN = pad.get_button(6)
-DRIGHT = pad.get_button(5)
-DLEFT = pad.get_button(7) 
-CROSS = pad.get_button(14)
-CIRCLE = pad.get_button(13)
-TRIANGLE = pad.get_button(12)
-SQUARE = pad.get_button(15)
-R1 = pad.get_button(10)
-R2 = pad.get_button(9)
-L1 = pad.get_button(11)
-L2 = pad.get_button(8)
-SELECT = pad.get_button(0)
-START = pad.get_button(3)
-
 
 #Main program
 MAINRUN = 1
@@ -207,7 +102,6 @@ while COUNTDOWN > 0:
     
 #Main loop - using this for the menu system
 while MAINRUN == 1:
-    pygame.event.pump()
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
@@ -217,15 +111,15 @@ while MAINRUN == 1:
         mylcd.lcd_display_string("Program         ", 2)
         time.sleep(5)
         MAINRUN = 0
-    elif pad.get_button(15) == 1: #when square pressed
-        fineremotecontrol()
-    elif pad.get_button(13) == 1: #when circle pressed
+        
+    elif keys[K_1]: #when one pressed
         courseremotecontrol()
     else:
         time.sleep(0.1)
-    time.sleep(0.1)
 
 mylcd.lcd_display_string("Program         ", 1)
 mylcd.lcd_display_string("Dead            ", 2)
+pz.stop()
+pz.cleanup()
 
     
