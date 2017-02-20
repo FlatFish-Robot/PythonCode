@@ -264,11 +264,26 @@ with SixAxisResource() as joystick:
 
         
         elif buttons_pressed & 1 << SixAxis.BUTTON_SQUARE:
-            mylcd.lcd_display_string("Starting", 1)
-            mylcd.lcd_display_string("Remote Control B", 2)
-            time.sleep(2)            
-            remotecontrolbasic()
-            
+            #mylcd.lcd_display_string("Starting", 1)
+            #mylcd.lcd_display_string("Remote Control B", 2)
+            #time.sleep(2)            
+            #remotecontrolbasic()
+            print ("Remote Control Program Active")
+            mylcd.lcd_display_string("Remote Control B", 1)
+            mylcd.lcd_display_string("Select Ends", 2)
+            time.sleep(2)
+            RUN = 1
+            while RUN == 1:
+                if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
+                    RUN = 0
+                elif buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
+                    pz.forward(100)
+                elif buttons_pressed & 1 << SixAxis.BUTTON_D_DOWN:
+                    pz.reverse(100)
+                elif buttons_pressed & 1 << SixAxis.BUTTON_D_RIGHT:
+                    pz.spinRight(100)
+                elif buttons_pressed & 1 << SixAxis.BUTTON_D_LEFT:
+                    pz.spinLeft(100)
         #____________________________________________________________________________________________________________________
 
 
