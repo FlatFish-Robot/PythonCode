@@ -46,21 +46,7 @@ pad.init()
 LEFTMOTOR = 0
 RIGHTMOTOR = 1
 
-#setup buttons
-DUP = pad.get_button(4)
-DDOWN = pad.get_button(6)
-DRIGHT = pad.get_button(5)
-DLEFT = pad.get_button(7) 
-CROSS = pad.get_button(14)
-CIRCLE = pad.get_button(13)
-TRIANGLE = pad.get_button(12)
-SQUARE = pad.get_button(15)
-R1 = pad.get_button(10)
-R2 = pad.get_button(9)
-L1 = pad.get_button(11)
-L2 = pad.get_button(8)
-SELECT = pad.get_button(0)
-START = pad.get_button(3)
+
 #____________________________________________________________________________________
 #functions for individual tasks
 
@@ -171,6 +157,25 @@ def courseremotecontrol():
 #____________________________________________________________________________________
 #main loop
 
+
+#assign buttons
+#setup buttons
+DUP = pad.get_button(4)
+DDOWN = pad.get_button(6)
+DRIGHT = pad.get_button(5)
+DLEFT = pad.get_button(7) 
+CROSS = pad.get_button(14)
+CIRCLE = pad.get_button(13)
+TRIANGLE = pad.get_button(12)
+SQUARE = pad.get_button(15)
+R1 = pad.get_button(10)
+R2 = pad.get_button(9)
+L1 = pad.get_button(11)
+L2 = pad.get_button(8)
+SELECT = pad.get_button(0)
+START = pad.get_button(3)
+
+
 #Main program
 MAINRUN = 1
 
@@ -191,9 +196,6 @@ while MAINRUN == 1:
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
     print("in main loop")
-    print(SQUARE)
-    print(CIRCLE)
-    print(pad.get_button(14))
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
