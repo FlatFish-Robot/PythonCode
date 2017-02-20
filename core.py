@@ -53,14 +53,14 @@ def fineremotecontrol():
     mylcd.lcd_display_string("Remote Control F", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
     time.sleep(2)
-    LEFTMOTOR = 0
-    RIGHTMOTOR = 1
+    LEFTMOTOR = 1
+    RIGHTMOTOR = 0
     while RUN == 1:
         pygame.event.pump()
         x = pad.get_axis(0) 
         y = pad.get_axis(1)
-        mylcd.lcd_display_string("X: %d " % x, 1)
-        mylcd.lcd_display_string("Y: %d " % y, 2)
+        mylcd.lcd_display_string("X: %f " % x, 1)
+        mylcd.lcd_display_string("Y: %f " % y, 2)
         if pad.get_button(0) == 1: #exit program
             RUN = 0
         elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
