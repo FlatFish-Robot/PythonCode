@@ -64,6 +64,7 @@ def courseremotecontrol():
     time.sleep(2)
     RUN = 1
     while RUN == 1:
+        pygame.event.pump()
         keys = pygame.key.get_pressed()
         if keys[K_ESC]: # exit program
             RUN = 0
@@ -96,6 +97,7 @@ while MAINRUN == 1:
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
+    pygame.event.pump()
     keys = pygame.key.get_pressed()
     #print("in main loop")
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
