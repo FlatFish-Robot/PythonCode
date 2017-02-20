@@ -274,57 +274,57 @@ with SixAxisResource() as joystick:
                 elif 0.1 >= x >= -0.1 and y <= -0.1: #full speed forwards
                     x = abs(x)
                     y = abs(y)
-                    r = 100 * y
-                    l = 100 * y
+                    r = int(100 * y)
+                    l = int(100 * y)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
                 elif 0.1 >= x >= -0.1 and y >= 0.1: #full speed backwards
                     x = abs(x)
                     y = abs(y)
-                    r = 100 * y
-                    l = 100 * y
+                    r = int(100 * y)
+                    l = int(100 * y)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r) 
                 elif x <= -0.1 and 0.1 >= y >= -0.1: #spin right
                     x = abs(x)
                     y = abs(y)
-                    r = -100 * x
-                    l = 100 * x
+                    r = int(-100 * x)
+                    l = int(100 * x)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
                 elif x >= 0.1 and 0.1 >= y >= -0.1: #spin left
                     x = abs(x)
                     y = abs(y)
-                    r = 100 * x
-                    l = -100 * x
+                    r = int(100 * x)
+                    l = int(-100 * x)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r) 
                 elif -0.9 < x < -0.1 and -0.9 < y < -0.1: #turnR - forwards
                     x = abs(x)
                     y = abs(y)
-                    r = 100 * x * (1-y)
-                    l = 100 * x
+                    r = int(100 * x * (1-y))
+                    l = int(100 * x)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
                 elif 0.9 > x > 0.1 and -0.9 < y < -0.1: #turnL - forwards
                     x = abs(x)
                     y = abs(y)
-                    r = 100 * x
-                    l = 100 * x * (1-y)
+                    r = int(100 * x)
+                    l = int(100 * x * (1-y))
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
                 elif 0.9 > x > 0.1 and 0.1 > y > 0.1: #turnL - backwards
                     x = abs(x)
                     y = abs(y)
-                    r = -100 * x
-                    l = -100 * x * (1-y)
+                    r = int(-100 * x)
+                    l = int(-100 * x * (1-y))
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
                 elif x < -0.1 and y > 0.1: #turnR - backwards
                     x = abs(x)
                     y = abs(y)
-                    r = -100 * x * (1-y)
-                    l = -100 * x 
+                    r = int(-100 * x * (1-y))
+                    l = int(-100 * x)
                     pz.setMotor(0,l)
                     pz.setMotor(1,r)
         #____________________________________________________________________________________________________________________
