@@ -42,8 +42,7 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 pad.init()
 
 #swap these if it turns the wrong way
-LEFTMOTOR = 0
-RIGHTMOTOR = 1
+
 
 
 #____________________________________________________________________________________
@@ -54,13 +53,15 @@ def fineremotecontrol():
     mylcd.lcd_display_string("Remote Control F", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
     time.sleep(2)
+    LEFTMOTOR = 0
+    RIGHTMOTOR = 1
     while RUN == 1:
         pygame.event.pump()
         x = pad.get_axis(0) 
         y = pad.get_axis(1)
-        mylcd.lcd_display_string("X: %d " % r, 1)
-        mylcd.lcd_display_string("Y: %d " % l, 2)
-        if SELECT == 1: #exit program
+        mylcd.lcd_display_string("X: %d " % x, 1)
+        mylcd.lcd_display_string("Y: %d " % y, 2)
+        if pad.get_button(0) == 1: #exit program
             RUN = 0
         elif 0.1 >= x >= -0.1 and 0.1 >= y >= -0.1: #stop
             x = abs(x)
@@ -128,7 +129,8 @@ def fineremotecontrol():
         time.sleep(0.1)
 
 def courseremotecontrol():
-    SPEED = 60
+    SPEEDFR = 60
+    SPEEDT = 100
     mylcd.lcd_display_string("Remote Control C", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
     time.sleep(2)
@@ -142,9 +144,9 @@ def courseremotecontrol():
         elif pad.get_button(6) == 1:
             pz.reverse(SPEED)
         elif pad.get_button(5) == 1:
-            pz.spinRight(SPEED)
+            pz.spinRight(SPEEDT)
         elif pad.get_button(7) == 1:
-            pz.spinLeft(SPEED)
+            pz.spinLeft(SPEEDT)
         else:
             pz.stop()
         time.sleep(0.1)
