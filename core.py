@@ -29,7 +29,6 @@ pz.setInputConfig(2,0) #right line sensor is input 2 and digital
 pz.setInputConfig(3,0) #left line is input 3 and digital
 
 DEVELOPER = Button(22) #assign developer switch to variable
-DEVELOPER = 0
 RIGHTIR = pz.readInput(0) #assign right IR to a variable
 LEFTIR = pz.readInput(1) #assign left IR to a variable
 RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
@@ -136,15 +135,15 @@ def courseremotecontrol():
     RUN = 1
     while RUN == 1:
         pygame.event.pump()
-        if SELECT == 1: # exit program
+        if pad.get_button(0) == 1: # exit program
             RUN = 0
-        elif DUP == 1:
+        elif pad.get_button(4) == 1:
             pz.forward(SPEED)
-        elif DDOWN == 1:
+        elif pad.get_button(6) == 1:
             pz.reverse(SPEED)
-        elif DRIGHT == 1:
+        elif pad.get_button(5) == 1:
             pz.spinRight(SPEED)
-        elif DLEFT == 1:
+        elif pad.get_button(7) == 1:
             pz.spinLeft(SPEED)
         else:
             pz.stop()
@@ -195,15 +194,15 @@ while MAINRUN == 1:
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
-    print("in main loop")
+    #print("in main loop")
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
         time.sleep(5)
         MAINRUN = 0
-    elif SQUARE == 1:
+    elif pad.get_button(15) == 1: #when square pressed
         fineremotecontrol()
-    elif CIRCLE == 1:
+    elif pad.get_button(13) == 1: #when circle pressed
         courseremotecontrol()
     else:
         time.sleep(0.1)
