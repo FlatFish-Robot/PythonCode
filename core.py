@@ -13,7 +13,7 @@ import I2C_LCD_driver
 
 pygame.joystick.init()
 screen = pygame.display.set_mode((100,100))
-#pygame.display.set_caption("Hello World")
+pygame.display.set_caption("Hello World")
 pad = pygame.joystick.Joystick(0)
 
 #____________________________________________________________________________________
@@ -199,6 +199,9 @@ while MAINRUN == 1:
         fineremotecontrol()
     elif CIRCLE == 1:
         courseremotecontrol()
+    else:
+        time.sleep(0.1)
+    time.sleep(0.1)
 
 mylcd.lcd_display_string("Program         ", 1)
 mylcd.lcd_display_string("Dead            ", 2)
