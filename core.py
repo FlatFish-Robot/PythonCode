@@ -193,6 +193,7 @@ while MAINRUN == 1:
     print("in main loop")
     print(SQUARE)
     print(CIRCLE)
+    print(pad.get_button(14))
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
