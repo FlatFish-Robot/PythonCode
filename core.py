@@ -36,9 +36,9 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 #__________________________________________________________________
 #Sub routines as functions for individual programs
 
-def remotecontrol():
+def remotecontrolcomplex():
     print ("Remote Control Program Active")
-    mylcd.lcd_display_string("Remote Control", 1)
+    mylcd.lcd_display_string("Remote Control C", 1)
     mylcd.lcd_display_string("Select Ends", 2)
     time.sleep(2)
     RUN = 1
@@ -112,6 +112,24 @@ def remotecontrol():
             l = int(-100 * x )
             pz.setMotor(0,l)
             pz.setMotor(1,r)
+
+def remotecontrolbasic():
+    print ("Remote Control Program Active")
+    mylcd.lcd_display_string("Remote Control B", 1)
+    mylcd.lcd_display_string("Select Ends", 2)
+    time.sleep(2)
+    RUN = 1
+    while RUN == 1:
+        if buttons_pressed & 1 << SixAxis.BUTTON_UP:
+            pz.forward(100)
+        elif buttons_pressed & 1 << SixAxis.BUTTON_DOWN:
+            pz.reverse(100)
+        elif buttons_pressed & 1 << SixAxis.BUTTON_RIGHT:
+            pz.spinRight(100)
+        elif buttons_pressed & 1 << SixAxis.BUTTON_LEFT:
+            pz.spinLeft(100)
+            
+            
     
 
 def linefollow():
@@ -245,7 +263,7 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Starting", 1)
             mylcd.lcd_display_string("Remote Control", 2)
             time.sleep(2)            
-            remotecontrol()
+            remotecontrolbasic()
             
         #____________________________________________________________________________________________________________________
 
