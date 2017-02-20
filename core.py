@@ -122,13 +122,13 @@ def remotecontrolbasic():
     time.sleep(2)
     RUN = 1
     while RUN == 1:
-        if buttons_pressed & 1 << SixAxis.BUTTON_UP:
+        if buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
             pz.forward(100)
-        elif buttons_pressed & 1 << SixAxis.BUTTON_DOWN:
+        elif buttons_pressed & 1 << SixAxis.BUTTON_D_DOWN:
             pz.reverse(100)
-        elif buttons_pressed & 1 << SixAxis.BUTTON_RIGHT:
+        elif buttons_pressed & 1 << SixAxis.BUTTON_D_RIGHT:
             pz.spinRight(100)
-        elif buttons_pressed & 1 << SixAxis.BUTTON_LEFT:
+        elif buttons_pressed & 1 << SixAxis.BUTTON_D_LEFT:
             pz.spinLeft(100)
             
             
