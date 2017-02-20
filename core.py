@@ -245,7 +245,7 @@ with SixAxisResource() as joystick:
             mylcd.lcd_display_string("Starting", 1)
             mylcd.lcd_display_string("Remote Control", 2)
             time.sleep(2)            
-            remot
+            remotecontrol()
             
         #____________________________________________________________________________________________________________________
 
