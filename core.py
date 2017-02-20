@@ -195,7 +195,7 @@ while MAINRUN == 1:
         MAINRUN = 0
     elif SQUARE == 1:
         fineremotecontrol()
-    elif circle == 1:
+    elif CIRCLE == 1:
         courseremotecontrol()
 
 mylcd.lcd_display_string("Program         ", 1)
