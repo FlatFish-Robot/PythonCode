@@ -90,15 +90,6 @@ def courseremotecontrol():
 MAINRUN = 1
 pz.stop()
 
-#LCD prompt
-COUNTDOWN = 9
-while COUNTDOWN > 0:
-    mylcd.lcd_display_string("Connect         ", 1)
-    mylcd.lcd_display_string("Controller %d   " % COUNTDOWN, 2)
-    time.sleep(1)
-    COUNTDOWN = COUNTDOWN - 1
-
-
     
 #Main loop - using this for the menu system
 while MAINRUN == 1:
