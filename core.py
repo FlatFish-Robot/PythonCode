@@ -69,7 +69,7 @@ def fineremotecontrol():
     mylcd.lcd_display_string("Remote Control F", 1)
     mylcd.lcd_display_string("Select Ends     ", 2)
     time.sleep(2)
-    while RUN = 1:
+    while RUN == 1:
         pygame.event.pump()
         x = pad.get_axis(0) 
         y = pad.get_axis(1)
