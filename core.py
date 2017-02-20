@@ -47,6 +47,7 @@ def remotecontrolcomplex():
         y = joystick.axes[1].corrected_value()
         r = 0
         l = 0
+        buttons_pressed = joystick.get_and_clear_button_press_history()
         #mylcd.lcd_display_string("X: %d " % r, 1)
         #mylcd.lcd_display_string("Y: %d " % l, 2)
         if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
@@ -279,19 +280,20 @@ with SixAxisResource() as joystick:
                 if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
                     RUN = 0
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
-                    pz.forward(100)
+                    pz.forward(60)
                     print("Forwards")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_DOWN:
-                    pz.reverse(100)
+                    pz.reverse(60)
                     print("Reverse")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_RIGHT:
-                    pz.spinRight(100)
+                    pz.spinRight(60)
                     print("Right")
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_LEFT:
-                    pz.spinLeft(100)
+                    pz.spinLeft(60)
                     print("Left")
                 else:
                     RUN = 1
+                    pz.stop()
         #____________________________________________________________________________________________________________________
 
 
