@@ -140,9 +140,9 @@ def courseremotecontrol():
         if pad.get_button(0) == 1: # exit program
             RUN = 0
         elif pad.get_button(4) == 1:
-            pz.forward(SPEED)
+            pz.forward(SPEEDFR)
         elif pad.get_button(6) == 1:
-            pz.reverse(SPEED)
+            pz.reverse(SPEEDFR)
         elif pad.get_button(5) == 1:
             pz.spinRight(SPEEDT)
         elif pad.get_button(7) == 1:
