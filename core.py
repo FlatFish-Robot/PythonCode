@@ -190,6 +190,9 @@ while MAINRUN == 1:
     mylcd.lcd_display_string("Main Menu", 1)
     mylcd.lcd_display_string("Select Program", 2)
     pz.stop()
+    print("in main loop")
+    print(SQUARE)
+    print(CIRCLE)
     if DEVELOPER == 1: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
