@@ -270,10 +270,11 @@ with SixAxisResource() as joystick:
             #remotecontrolbasic()
             print ("Remote Control Program Active")
             mylcd.lcd_display_string("Remote Control B", 1)
-            mylcd.lcd_display_string("Select Ends", 2)
+            mylcd.lcd_display_string("Select Ends   ", 2)
             time.sleep(2)
             RUN = 1
             while RUN == 1:
+                print("In Loop")
                 if buttons_pressed & 1 << SixAxis.BUTTON_SELECT:
                     RUN = 0
                 elif buttons_pressed & 1 << SixAxis.BUTTON_D_UP:
