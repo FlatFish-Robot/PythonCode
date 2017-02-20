@@ -25,10 +25,10 @@ mylcd.lcd_display_string("                ", 2)
 #____________________________________________________________________________________
 #pygame setup
 
-
-pygame.joystick.init()
+pygame.init()
 screen = pygame.display.set_mode((100,100))
 pygame.display.set_caption("Hello World")
+pygame.joystick.init()
 pad = pygame.joystick.Joystick(0)
 
 #____________________________________________________________________________________
