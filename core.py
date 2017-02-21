@@ -9,11 +9,12 @@ import piconzero as pz
 from gpiozero import Button
 import I2C_LCD_driver
 
+#I2C LCD driver from http://www.circuitbasics.com/raspberry-pi-i2c-lcd-set-up-and-programming/
 #_____________________________________________________________________________
 #lcd at startup
 mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
 
-COUNTDOWN = 30
+COUNTDOWN = 10
 while COUNTDOWN > 0:
     mylcd.lcd_display_string("Starting up.... ", 1)
     mylcd.lcd_display_string("       T - %d   " % COUNTDOWN, 2)
@@ -36,8 +37,6 @@ pygame.display.set_caption("Hello World")
 
 pz.init() #initiate hardware
 
-
-
 pz.setInputConfig(0,0) #right IR sensor is input 0 and digital
 pz.setInputConfig(1,0) #left IR sensor is input 1 and digital
 pz.setInputConfig(2,0) #right line sensor is input 2 and digital
@@ -59,14 +58,14 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 def courseremotecontrol():
     SPEEDFR = 60
     SPEEDT = 100
-    mylcd.lcd_display_string("Remote Control C", 1)
-    mylcd.lcd_display_string("Select Ends     ", 2)
+    mylcd.lcd_display_string("Remote Control  ", 1)
+    mylcd.lcd_display_string("Press 1 to End  ", 2)
     time.sleep(2)
     RUN = 1
     while RUN == 1:
         pygame.event.pump()
         keys = pygame.key.get_pressed()
-        if keys[K_ESCAPE]: # exit program
+        if keys[K_1]: # exit program
             RUN = 0
         if keys[K_UP]:
             pz.forward(SPEEDFR)
@@ -78,7 +77,6 @@ def courseremotecontrol():
             pz.spinLeft(SPEEDT)
         if keys[K_SPACE]:
             pz.stop()
-        
 
 
 
@@ -94,13 +92,13 @@ pz.stop()
     
 #Main loop - using this for the menu system
 while MAINRUN == 1:
-    mylcd.lcd_display_string("Main Menu", 1)
-    mylcd.lcd_display_string("Select Program", 2)
+    mylcd.lcd_display_string("Main Menu       ", 1)
+    mylcd.lcd_display_string("Select Program  ", 2)
     pz.stop()
     pygame.event.pump()
     keys = pygame.key.get_pressed()
     #print("in main loop")
-    if DEVELOPER == 1: #check for developer switch activation and if positive kill program
+    if DEVELOPER == 1 OR keys[K_ESCAPE]: #check for developer switch activation and if positive kill program
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
         time.sleep(5)
