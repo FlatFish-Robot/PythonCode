@@ -106,7 +106,7 @@ while MAINRUN == 1:
     pygame.event.pump()
     keys = pygame.key.get_pressed()
     #print("in main loop")
-    if DEVELOPER == 1 OR keys[K_ESCAPE]: 
+    if DEVELOPER == 1: 
         mylcd.lcd_display_string("Killing         ", 1)
         mylcd.lcd_display_string("Program         ", 2)
         time.sleep(5)
