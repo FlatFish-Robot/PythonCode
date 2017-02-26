@@ -10,6 +10,15 @@ from gpiozero import Button
 import I2C_LCD_driver
 
 #I2C LCD driver from http://www.circuitbasics.com/raspberry-pi-i2c-lcd-set-up-and-programming/
+
+#kill if developer active
+MAINRUN = 1
+DEVELOPER = Button(22) #assign developer switch to variable
+
+if DEVELOPER == 1:
+    sys.exit(0)
+
+
 #_____________________________________________________________________________
 #lcd at startup
 mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
@@ -42,7 +51,7 @@ pz.setInputConfig(1,0) #left IR sensor is input 1 and digital
 pz.setInputConfig(2,0) #right line sensor is input 2 and digital
 pz.setInputConfig(3,0) #left line is input 3 and digital
 
-DEVELOPER = Button(22) #assign developer switch to variable
+
 RIGHTIR = pz.readInput(0) #assign right IR to a variable
 LEFTIR = pz.readInput(1) #assign left IR to a variable
 RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
@@ -86,7 +95,7 @@ def courseremotecontrol():
 #main loop
 
 #Main program
-MAINRUN = 1
+
 pz.stop()
 
     
