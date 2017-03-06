@@ -87,8 +87,8 @@ def remotecontrolf():
             pz.stop()
 
 def remotecontrols():
-    SPEEDFR = 30
-    SPEEDT = 50
+    SPEEDFR = 50
+    SPEEDT = 45
     mylcd.lcd_display_string("Remote Control S", 1)
     mylcd.lcd_display_string("Press 1 to End  ", 2)
     time.sleep(2)
@@ -96,7 +96,7 @@ def remotecontrols():
     while RUN == 1:
         pygame.event.pump()
         keys = pygame.key.get_pressed()
-        if keys[K_ESC # exit program
+        if keys[K_ESC]: # exit program
             RUN = 0
         if keys[K_UP]:
             pz.forward(SPEEDFR)
