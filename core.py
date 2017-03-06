@@ -63,10 +63,10 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 #functions for individual tasks
 
 
-def courseremotecontrol():
-    SPEEDFR = 60
+def remotecontrolf():
+    SPEEDFR = 50
     SPEEDT = 100
-    mylcd.lcd_display_string("Remote Control  ", 1)
+    mylcd.lcd_display_string("Remote Control F", 1)
     mylcd.lcd_display_string("Press 1 to End  ", 2)
     time.sleep(2)
     RUN = 1
@@ -84,6 +84,33 @@ def courseremotecontrol():
         if keys[K_LEFT]:
             pz.spinLeft(SPEEDT)
         if keys[K_SPACE]:
+            pz.stop()
+        else:
+            pz.stop()
+
+def remotecontrols():
+    SPEEDFR = 30
+    SPEEDT = 50
+    mylcd.lcd_display_string("Remote Control S", 1)
+    mylcd.lcd_display_string("Press 1 to End  ", 2)
+    time.sleep(2)
+    RUN = 1
+    while RUN == 1:
+        pygame.event.pump()
+        keys = pygame.key.get_pressed()
+        if keys[K_1]: # exit program
+            RUN = 0
+        if keys[K_UP]:
+            pz.forward(SPEEDFR)
+        if keys[K_DOWN]:
+            pz.reverse(SPEEDFR)
+        if keys[K_RIGHT]:
+            pz.spinRight(SPEEDT)
+        if keys[K_LEFT]:
+            pz.spinLeft(SPEEDT)
+        if keys[K_SPACE]:
+            pz.stop()
+        else:
             pz.stop()
 
 
@@ -112,7 +139,9 @@ while MAINRUN == 1:
         time.sleep(5)
         MAINRUN = 0
     elif keys[K_1]: #when one pressed
-        courseremotecontrol()
+        remotecontrolf()
+    elif keys[K_2]: #when one pressed
+        remotecontrols()
     else:
         time.sleep(0.1)
 
