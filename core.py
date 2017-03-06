@@ -85,8 +85,6 @@ def remotecontrolf():
             pz.spinLeft(SPEEDT)
         if keys[K_SPACE]:
             pz.stop()
-        else:
-            pz.stop()
 
 def remotecontrols():
     SPEEDFR = 30
@@ -110,8 +108,7 @@ def remotecontrols():
             pz.spinLeft(SPEEDT)
         if keys[K_SPACE]:
             pz.stop()
-        else:
-            pz.stop()
+       
 
 
 
