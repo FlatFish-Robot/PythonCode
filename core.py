@@ -144,7 +144,9 @@ while MAINRUN == 1:
 
 mylcd.lcd_display_string("Program         ", 1)
 mylcd.lcd_display_string("Dead            ", 2)
+time.sleep(2)
 pz.stop()
 pz.cleanup()
+mylcd.lcd_clear()
 
     
