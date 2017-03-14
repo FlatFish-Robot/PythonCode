@@ -70,11 +70,11 @@ RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 
 def remotecontrol():
     mylcd.lcd_display_string("Remote Control  ", 1)
-    mylcd.lcd_display_string("Press ESC to End", 2)
+    mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
     mylcd.lcd_display_string("Speed = %d    ", 1)
-    mylcd.lcd_display_string("Press ESC to End", 2)
+    mylcd.lcd_display_string("Press E to End  ", 2)
     while True:
         keyp = readkey()
         if ord(keyp) == 16:
@@ -88,42 +88,46 @@ def remotecontrol():
         elif keyp == '.' or keyp == '>':
             speed = min(100, speed+10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
-            mylcd.lcd_display_string("Press ESC to End", 2)
+            mylcd.lcd_display_string("Press E to End  ", 2)
         elif keyp == ',' or keyp == '<':
             speed = max (0, speed-10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
-            mylcd.lcd_display_string("Press ESC to End", 2)
+            mylcd.lcd_display_string("Press E to End  ", 2)
         elif keyp == ' ':
             pz.stop()
-        elif ord(keyp) == 3:
+        elif keyp == 'e':
             break
 
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
-    mylcd.lcd_display_string("Press ESC to End", 2)
+    mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
-    mylcd.lcd_display_string("Press ESC to End", 2)
+    mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
 
 def speedrun():
     mylcd.lcd_display_string("Auto Maze       ", 1)
-    mylcd.lcd_display_string("Press ESC to End", 2)
+    mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
+    GO = True
     while True:
+        keyp = readkey()
         mylcd.lcd_display_string("Press G to GO   ", 1)
-        mylcd.lcd_display_string("Press S to STOP ", 2)
+        mylcd.lcd_display_string("Press E to End  ", 2)
         if keyp == 'g':
             break
-        elif ord(keyp) == 3:
+        elif keyp == 'e':
             pz.stop
+            GO = False
             break
-    while True:
+    while GO == True:
+        keyp = readkey()
         mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
         mylcd.lcd_display_string("Press S to STOP ", 2)
         if RIGHTIR == 1:
@@ -135,14 +139,15 @@ def speedrun():
         elif keyp == 's':
             pz.stop
             while True:
+                keyp = readkey()
                 mylcd.lcd_display_string("Press G to GO   ", 1)
                 mylcd.lcd_display_string("Press S to STOP ", 2)
                 if keyp == 'g':
                     break
-                elif ord(keyp) == 3:
+                elif keyp == 'e':
                    pz.stop
                    break
-        elif ord(keyp) == 3:
+        elif keyp == 'e':
             pz.stop
             break
 
