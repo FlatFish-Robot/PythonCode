@@ -1,44 +1,43 @@
-import pygame
-import sys
-from pygame.locals import *
+#code for flatfish Mark 6
+import piconzero as pz
 import time
-import smbus
+import sys
+import tty
+import termios
 import os
 import hcsr04
-import piconzero as pz
-from gpiozero import Button
 import I2C_LCD_driver
-
 #I2C LCD driver from http://www.circuitbasics.com/raspberry-pi-i2c-lcd-set-up-and-programming/
 
-#kill if developer active
-MAINRUN = 1
-DEVELOPER = Button(22) #assign developer switch to variable
-if DEVELOPER == 1:
-    sys.exit(0)
+#======================================================================
+# Reading single character by forcing stdin to raw mode
 
+def readchar():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    if ch == '0x03':
+        raise KeyboardInterrupt
+    return ch
 
-#_____________________________________________________________________________
-#lcd at startup
-mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
+def readkey(getchar_fn=None):
+    getchar = getchar_fn or readchar
+    c1 = getchar()
+    if ord(c1) != 0x1b:
+        return c1
+    c2 = getchar()
+    if ord(c2) != 0x5b:
+        return c1
+    c3 = getchar()
+    return chr(0x10 + ord(c3) - 65)  # 16=Up, 17=Down, 18=Right, 19=Left arrows
 
-COUNTDOWN = 10
-while COUNTDOWN > 0:
-    mylcd.lcd_display_string("Starting up.... ", 1)
-    mylcd.lcd_display_string("       T - %d   " % COUNTDOWN, 2)
-    time.sleep(1)
-    COUNTDOWN = COUNTDOWN - 1
-mylcd.lcd_display_string("Script on       ", 1)
-mylcd.lcd_display_string("                ", 2)
+# End of single character reading
+#======================================================================
 
-
-
-#____________________________________________________________________________________
-#pygame setup
-
-pygame.init()
-screen = pygame.display.set_mode((100,100))
-pygame.display.set_caption("Hello World")
 
 #____________________________________________________________________________________
 #hardware setup
@@ -59,94 +58,128 @@ LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 hcsr04.init() #initiate hardware
 RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 
+#end of hardware setup
+#______________________________________________________________________________
+
+
 #____________________________________________________________________________________
 #functions for individual tasks
 
 
-def remotecontrolf():
-    SPEEDFR = 50
-    SPEEDT = 100
-    mylcd.lcd_display_string("Remote Control F", 1)
-    mylcd.lcd_display_string("Press 1 to End  ", 2)
+def remotecontrol():
+    mylcd.lcd_display_string("Remote Control  ", 1)
+    mylcd.lcd_display_string("Press ESC to End", 2)
     time.sleep(2)
-    RUN = 1
-    while RUN == 1:
-        pygame.event.pump()
-        keys = pygame.key.get_pressed()
-        if keys[K_ESC]: # exit program
-            RUN = 0
-        if keys[K_UP]:
-            pz.forward(SPEEDFR)
-        if keys[K_DOWN]:
-            pz.reverse(SPEEDFR)
-        if keys[K_RIGHT]:
-            pz.spinRight(SPEEDT)
-        if keys[K_LEFT]:
-            pz.spinLeft(SPEEDT)
-        if keys[K_SPACE]:
+    speed = 100
+    mylcd.lcd_display_string("Speed = %d    ", 1)
+    mylcd.lcd_display_string("Press ESC to End", 2)
+    while True:
+        keyp = readkey()
+        if ord(keyp) == 16:
+            pz.forward(speed)
+        elif ord(keyp) == 17:
+            pz.reverse(speed)
+        elif ord(keyp) == 18:
+            pz.spinRight(speed)
+        elif ord(keyp) == 19:
+            pz.spinLeft(speed)
+        elif keyp == '.' or keyp == '>':
+            speed = min(100, speed+10)
+            mylcd.lcd_display_string("Speed = %d  " % speed, 1)
+            mylcd.lcd_display_string("Press ESC to End", 2)
+        elif keyp == ',' or keyp == '<':
+            speed = max (0, speed-10)
+            mylcd.lcd_display_string("Speed = %d  " % speed, 1)
+            mylcd.lcd_display_string("Press ESC to End", 2)
+        elif keyp == ' ':
             pz.stop()
+        elif ord(keyp) == 3:
+            break
 
-def remotecontrols():
-    SPEEDFR = 50
-    SPEEDT = 45
-    mylcd.lcd_display_string("Remote Control S", 1)
-    mylcd.lcd_display_string("Press 1 to End  ", 2)
+def linefollower():
+    mylcd.lcd_display_string("Line Follower   ", 1)
+    mylcd.lcd_display_string("Press ESC to End", 2)
     time.sleep(2)
-    RUN = 1
-    while RUN == 1:
-        pygame.event.pump()
-        keys = pygame.key.get_pressed()
-        if keys[K_ESC]: # exit program
-            RUN = 0
-        if keys[K_UP]:
-            pz.forward(SPEEDFR)
-        if keys[K_DOWN]:
-            pz.reverse(SPEEDFR)
-        if keys[K_RIGHT]:
-            pz.spinRight(SPEEDT)
-        if keys[K_LEFT]:
-            pz.spinLeft(SPEEDT)
-        if keys[K_SPACE]:
-            pz.stop()
-       
+    speed = 100
 
+def automaze():
+    mylcd.lcd_display_string("Auto Maze       ", 1)
+    mylcd.lcd_display_string("Press ESC to End", 2)
+    time.sleep(2)
+    speed = 100
 
+def speedrun():
+    mylcd.lcd_display_string("Auto Maze       ", 1)
+    mylcd.lcd_display_string("Press ESC to End", 2)
+    time.sleep(2)
+    speed = 100
+    while True:
+        mylcd.lcd_display_string("Press G to GO   ", 1)
+        mylcd.lcd_display_string("Press S to STOP ", 2)
+        if keyp == 'g':
+            break
+        elif ord(keyp) == 3:
+            pz.stop
+            break
+    while True:
+        mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+        mylcd.lcd_display_string("Press S to STOP ", 2)
+        if RIGHTIR == 1:
+            pz.spinleft(100)
+            time.sleep(0.5)
+        elif LEFTIR == 1:
+            pz.spinright(100)
+            time.sleep(0.5)
+        elif keyp == 's':
+            pz.stop
+            while True:
+                mylcd.lcd_display_string("Press G to GO   ", 1)
+                mylcd.lcd_display_string("Press S to STOP ", 2)
+                if keyp == 'g':
+                    break
+                elif ord(keyp) == 3:
+                   pz.stop
+                   break
+        elif ord(keyp) == 3:
+            pz.stop
+            break
 
-
+#end functions
+#_____________________________________________________________________________
 
 #____________________________________________________________________________________
-#main loop
+#Main Loop
 
-#Main program
+mylcd.lcd_display_string("Select Option   ", 1)
+mylcd.lcd_display_string("S to Shutdown   ", 2)
 
-pz.stop()
+try:
+    while True:
+        keyp = readkey()
+        mylcd.lcd_display_string("Select Option   ", 1)
+        mylcd.lcd_display_string("S to Shutdown   ", 2)
+        if keyp == 's':
+            mylcd.lcd_display_string("Shutting Down   ", 1)
+            mylcd.lcd_display_string("                ", 2)
+            os.system("shutdown now -h")
+        elif keyp == '1':
+            remotecontrol()
+            
 
-    
-#Main loop - using this for the menu system
-while MAINRUN == 1:
-    mylcd.lcd_display_string("Main Menu       ", 1)
-    mylcd.lcd_display_string("Select Program  ", 2)
+except KeyboardInterrupt:
+    print ("")
+
+finally:
     pz.stop()
-    pygame.event.pump()
-    keys = pygame.key.get_pressed()
-    #print("in main loop")
-    if DEVELOPER == 1: 
-        mylcd.lcd_display_string("Killing         ", 1)
-        mylcd.lcd_display_string("Program         ", 2)
-        time.sleep(5)
-        MAINRUN = 0
-    elif keys[K_1]: #when one pressed
-        remotecontrolf()
-    elif keys[K_2]: #when one pressed
-        remotecontrols()
-    else:
-        time.sleep(0.1)
-
-mylcd.lcd_display_string("Program         ", 1)
-mylcd.lcd_display_string("Dead            ", 2)
-time.sleep(2)
-pz.stop()
-pz.cleanup()
-mylcd.lcd_clear()
-
+    pz.cleanup()
     
+
+
+
+
+
+
+
+
+
+
