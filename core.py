@@ -79,25 +79,25 @@ def remotecontrol():
         keyp = readkey()
         if ord(keyp) == 16:
             pz.forward(speed)
-        elif ord(keyp) == 17:
+        if ord(keyp) == 17:
             pz.reverse(speed)
-        elif ord(keyp) == 18:
+        if ord(keyp) == 18:
             pz.spinRight(speed)
-        elif ord(keyp) == 19:
+        if ord(keyp) == 19:
             pz.spinLeft(speed)
-        elif keyp == '.' or keyp == '>':
+        if keyp == '.' or keyp == '>':
             speed = min(100, speed+10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
-        elif keyp == ',' or keyp == '<':
+        if keyp == ',' or keyp == '<':
             speed = max (0, speed-10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
-        elif keyp == ' ':
+        if keyp == ' ':
             pz.stop()
-        elif keyp == 'e':
+        if keyp == 'e':
             break
-        time.sleep(0.2)
+        time.sleep(0.02)
 
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
