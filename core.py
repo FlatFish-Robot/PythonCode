@@ -97,6 +97,7 @@ def remotecontrol():
             pz.stop()
         elif keyp == 'e':
             break
+        time.sleep(0.2)
 
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
