@@ -42,6 +42,8 @@ def readkey(getchar_fn=None):
 #____________________________________________________________________________________
 #hardware setup
 
+mylcd = I2C_LCD_driver.lcd() #assign LCD to variable for ease of use
+
 pz.init() #initiate hardware
 
 pz.setInputConfig(0,0) #right IR sensor is input 0 and digital
