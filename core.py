@@ -79,23 +79,31 @@ def remotecontrol():
         keyp = readkey()
         if ord(keyp) == 16:
             pz.forward(speed)
+            keyp = readkey()
         if ord(keyp) == 17:
             pz.reverse(speed)
+            keyp = readkey()
         if ord(keyp) == 18:
             pz.spinRight(speed)
+            keyp = readkey()
         if ord(keyp) == 19:
+            keyp = readkey()
             pz.spinLeft(speed)
         if keyp == '.' or keyp == '>':
+            keyp = readkey()
             speed = min(100, speed+10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
         if keyp == ',' or keyp == '<':
+            keyp = readkey()
             speed = max (0, speed-10)
             mylcd.lcd_display_string("Speed = %d  " % speed, 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
         if keyp == ' ':
+            keyp = readkey()
             pz.stop()
         if keyp == 'e':
+            keyp = readkey()
             break
         time.sleep(0.02)
 
