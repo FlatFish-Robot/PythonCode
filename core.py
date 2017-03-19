@@ -2,41 +2,12 @@
 import piconzero as pz
 import time
 import sys
-import tty
-import termios
+from inputs import get_key
 import os
 import hcsr04
 import I2C_LCD_driver
 #I2C LCD driver from http://www.circuitbasics.com/raspberry-pi-i2c-lcd-set-up-and-programming/
 
-#======================================================================
-# Reading single character by forcing stdin to raw mode
-
-def readchar():
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(sys.stdin.fileno())
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    if ch == '0x03':
-        raise KeyboardInterrupt
-    return ch
-
-def readkey(getchar_fn=None):
-    getchar = getchar_fn or readchar
-    c1 = getchar()
-    if ord(c1) != 0x1b:
-        return c1
-    c2 = getchar()
-    if ord(c2) != 0x5b:
-        return c1
-    c3 = getchar()
-    return chr(0x10 + ord(c3) - 65)  # 16=Up, 17=Down, 18=Right, 19=Left arrows
-
-# End of single character reading
-#======================================================================
 
 
 #____________________________________________________________________________________
@@ -73,39 +44,64 @@ def remotecontrol():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
-    mylcd.lcd_display_string("Speed = %d    ", 1)
+    mylcd.lcd_display_string("Speed = %d    " % speed , 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
-    while True:
-        keyp = readkey()
-        if ord(keyp) == 16:
-            pz.forward(speed)
-            keyp = readkey()
-        if ord(keyp) == 17:
-            pz.reverse(speed)
-            keyp = readkey()
-        if ord(keyp) == 18:
-            pz.spinRight(speed)
-            keyp = readkey()
-        if ord(keyp) == 19:
-            keyp = readkey()
-            pz.spinLeft(speed)
-        if keyp == '.' or keyp == '>':
-            keyp = readkey()
-            speed = min(100, speed+10)
-            mylcd.lcd_display_string("Speed = %d  " % speed, 1)
-            mylcd.lcd_display_string("Press E to End  ", 2)
-        if keyp == ',' or keyp == '<':
-            keyp = readkey()
-            speed = max (0, speed-10)
-            mylcd.lcd_display_string("Speed = %d  " % speed, 1)
-            mylcd.lcd_display_string("Press E to End  ", 2)
-        if keyp == ' ':
-            keyp = readkey()
-            pz.stop()
-        if keyp == 'e':
-            keyp = readkey()
-            break
-        time.sleep(0.02)
+    GO == 1
+    while GO == 1:
+            for event in get_key():
+                if event.code == "KEY_UP":
+                        if event.state == 1:
+                            pz.forward(speed)
+                            time.sleep(0.8)
+                            pz.stop()
+                        elif event.state == 2:
+                            pz.forward(speed)
+                        elif event.state == 0:
+                            pz.stop()
+                if event.code == "KEY_DOWN":
+                        if event.state == 1:
+                            pz.reverse(speed)
+                            time.sleep(0.8)
+                            pz.stop()
+                        elif event.state == 2:
+                            pz.reverse(speed)
+                        elif event.state == 0:
+                            pz.stop()
+                if event.code == "KEY_RIGHT":
+                        if event.state == 1:
+                            pz.spinRight(speed)
+                            time.sleep(0.8)
+                            pz.stop()
+                        elif event.state == 2:
+                            pz.spinRight(speed)
+                        elif event.state == 0:
+                            pz.stop()
+                if event.code == "KEY_LEFT":
+                        if event.state == 1:
+                            pz.spinLeft(speed)
+                            time.sleep(0.8)
+                            pz.stop()
+                        elif event.state == 2:
+                            pz.spinLeft(speed)
+                        elif event.state == 0:
+                            pz.stop()
+                if event.code == "KEY_." or event.code == "KEY_>":
+                    if event.state == 1 or event.state == 2:
+                        speed = min(100, speed+10)
+                        mylcd.lcd_display_string("Speed = %d  " % speed, 1)
+                        mylcd.lcd_display_string("Press E to End  ", 2)
+                if event.code == "KEY_," or event.code == "KEY_<":
+                    if event.state == 1 or event.state == 2:
+                        speed = max (0, speed-10)
+                        mylcd.lcd_display_string("Speed = %d  " % speed, 1)
+                        mylcd.lcd_display_string("Press E to End  ", 2)
+                if event.code == "KEY_SPACE":
+                    if event.state == 1 or event.state == 2:
+                        pz.stop()
+                if event.code == "KEY_E":
+                    if event.state == 1 or event.state == 2:
+                        keyp = readkey()
+                        GO == 0
 
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
@@ -126,37 +122,39 @@ def speedrun():
     speed = 100
     GO = True
     while True:
-        keyp = readkey()
         mylcd.lcd_display_string("Press G to GO   ", 1)
         mylcd.lcd_display_string("Press E to End  ", 2)
-        if keyp == 'g':
+        if event.code == "KEY_G":
             break
-        elif keyp == 'e':
+        elif event.code == "KEY_E":
             pz.stop
             GO = False
             break
     while GO == True:
-        keyp = readkey()
         mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
         mylcd.lcd_display_string("Press S to STOP ", 2)
+        pz.forward(100)
         if RIGHTIR == 1:
             pz.spinleft(100)
-            time.sleep(0.5)
+            time.sleep(0.8)
+            pz.forward(100)
         elif LEFTIR == 1:
             pz.spinright(100)
-            time.sleep(0.5)
-        elif keyp == 's':
+            time.sleep(0.8)
+            pz.forward(100)
+        elif event.code == "KEY_S":
             pz.stop
             while True:
                 keyp = readkey()
                 mylcd.lcd_display_string("Press G to GO   ", 1)
                 mylcd.lcd_display_string("Press S to STOP ", 2)
-                if keyp == 'g':
+                if event.code == "KEY_G":
                     break
-                elif keyp == 'e':
+                elif event.code == "KEY_S":
                    pz.stop
+                   GO = False
                    break
-        elif keyp == 'e':
+        elif event.code == "KEY_E":
             pz.stop
             break
 
@@ -168,18 +166,19 @@ def speedrun():
 
 mylcd.lcd_display_string("Select Option   ", 1)
 mylcd.lcd_display_string("S to Shutdown   ", 2)
+MAINLOOP = 1
 
 try:
     while True:
-        keyp = readkey()
-        mylcd.lcd_display_string("Select Option   ", 1)
-        mylcd.lcd_display_string("S to Shutdown   ", 2)
-        if keyp == 's':
-            mylcd.lcd_display_string("Shutting Down   ", 1)
-            mylcd.lcd_display_string("                ", 2)
-            os.system("shutdown now -h")
-        elif keyp == '1':
-            remotecontrol()
+        for event in get_key():
+            mylcd.lcd_display_string("Select Option   ", 1)
+            mylcd.lcd_display_string("S to Shutdown   ", 2)
+            if event.code == "KEY_S":
+                mylcd.lcd_display_string("Shutting Down   ", 1)
+                mylcd.lcd_display_string("                ", 2)
+                os.system("shutdown now -h")
+            elif event.code == "KEY_1":
+                remotecontrol()
             
 
 except KeyboardInterrupt:
