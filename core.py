@@ -121,11 +121,12 @@ def speedrun():
     time.sleep(2)
     speed = 100
     GO = True
-    while True:
+    PREP = True
+    while PREP == True:
         mylcd.lcd_display_string("Press G to GO   ", 1)
         mylcd.lcd_display_string("Press E to End  ", 2)
         if event.code == "KEY_G":
-            break
+            PREP = False
         elif event.code == "KEY_E":
             pz.stop
             GO = False
