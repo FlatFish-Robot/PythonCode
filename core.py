@@ -138,11 +138,11 @@ def speedrun():
             mylcd.lcd_display_string("Press S to STOP ", 2)
             pz.forward(100)
             if RIGHTIR == 1:
-                pz.spinleft(100)
+                pz.spinLeft(100)
                 time.sleep(0.8)
                 pz.forward(100)
             elif LEFTIR == 1:
-                pz.spinright(100)
+                pz.spinRight(100)
                 time.sleep(0.8)
                 pz.forward(100)
             elif event.code == "KEY_S":
