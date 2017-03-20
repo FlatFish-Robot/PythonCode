@@ -131,7 +131,8 @@ def speedrun():
             elif event.code == "KEY_E":
                 pz.stop
                 GO = False
-                break
+                PREP = False
+                
     while GO == True:
         for event in get_key():
             RIGHTIR = pz.readInput(0) 
@@ -141,11 +142,11 @@ def speedrun():
             pz.forward(100)
             if RIGHTIR == 1:
                 pz.spinLeft(100)
-                time.sleep(0.8)
+                time.sleep(0.3)
                 pz.forward(100)
             elif LEFTIR == 1:
                 pz.spinRight(100)
-                time.sleep(0.8)
+                time.sleep(0.3)
                 pz.forward(100)
             elif event.code == "KEY_S":
                 pz.stop
