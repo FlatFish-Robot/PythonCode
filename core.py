@@ -123,40 +123,42 @@ def speedrun():
     GO = True
     PREP = True
     while PREP == True:
-        mylcd.lcd_display_string("Press G to GO   ", 1)
-        mylcd.lcd_display_string("Press E to End  ", 2)
-        if event.code == "KEY_G":
-            PREP = False
-        elif event.code == "KEY_E":
-            pz.stop
-            GO = False
-            break
+        for event in get_key():
+            mylcd.lcd_display_string("Press G to GO   ", 1)
+            mylcd.lcd_display_string("Press E to End  ", 2)
+            if event.code == "KEY_G":
+                PREP = False
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = False
+                break
     while GO == True:
-        mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-        mylcd.lcd_display_string("Press S to STOP ", 2)
-        pz.forward(100)
-        if RIGHTIR == 1:
-            pz.spinleft(100)
-            time.sleep(0.8)
+        for event in get_key():
+            mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+            mylcd.lcd_display_string("Press S to STOP ", 2)
             pz.forward(100)
-        elif LEFTIR == 1:
-            pz.spinright(100)
-            time.sleep(0.8)
-            pz.forward(100)
-        elif event.code == "KEY_S":
-            pz.stop
-            while True:
-                mylcd.lcd_display_string("Press G to GO   ", 1)
-                mylcd.lcd_display_string("Press S to STOP ", 2)
-                if event.code == "KEY_G":
-                    break
-                elif event.code == "KEY_S":
-                   pz.stop
-                   GO = False
-                   break
-        elif event.code == "KEY_E":
-            pz.stop
-            break
+            if RIGHTIR == 1:
+                pz.spinleft(100)
+                time.sleep(0.8)
+                pz.forward(100)
+            elif LEFTIR == 1:
+                pz.spinright(100)
+                time.sleep(0.8)
+                pz.forward(100)
+            elif event.code == "KEY_S":
+                pz.stop
+                while True:
+                    mylcd.lcd_display_string("Press G to GO   ", 1)
+                    mylcd.lcd_display_string("Press S to STOP ", 2)
+                    if event.code == "KEY_G":
+                        break
+                    elif event.code == "KEY_S":
+                       pz.stop
+                       GO = False
+                       break
+            elif event.code == "KEY_E":
+                pz.stop
+                break
 
 #end functions
 #_____________________________________________________________________________
