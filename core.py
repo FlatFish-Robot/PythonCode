@@ -145,7 +145,6 @@ def speedrun():
         elif event.code == "KEY_S":
             pz.stop
             while True:
-                keyp = readkey()
                 mylcd.lcd_display_string("Press G to GO   ", 1)
                 mylcd.lcd_display_string("Press S to STOP ", 2)
                 if event.code == "KEY_G":
@@ -179,6 +178,8 @@ try:
                 os.system("shutdown now -h")
             elif event.code == "KEY_1":
                 remotecontrol()
+            elif event.code == "KEY_2":
+                speedrun()
             
 
 except KeyboardInterrupt:
