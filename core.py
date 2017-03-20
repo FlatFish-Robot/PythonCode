@@ -47,12 +47,13 @@ def remotecontrol():
     mylcd.lcd_display_string("Speed = %d    " % speed , 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     GO = 1
+    BURST = 0.5
     while GO == 1:
             for event in get_key():
                 if event.code == "KEY_UP":
                         if event.state == 1:
                             pz.forward(speed)
-                            time.sleep(0.8)
+                            time.sleep(BURST)
                             pz.stop()
                         elif event.state == 2:
                             pz.forward(speed)
@@ -61,7 +62,7 @@ def remotecontrol():
                 if event.code == "KEY_DOWN":
                         if event.state == 1:
                             pz.reverse(speed)
-                            time.sleep(0.8)
+                            time.sleep(BURST)
                             pz.stop()
                         elif event.state == 2:
                             pz.reverse(speed)
@@ -70,7 +71,7 @@ def remotecontrol():
                 if event.code == "KEY_RIGHT":
                         if event.state == 1:
                             pz.spinRight(speed)
-                            time.sleep(0.8)
+                            time.sleep(BURST)
                             pz.stop()
                         elif event.state == 2:
                             pz.spinRight(speed)
@@ -79,7 +80,7 @@ def remotecontrol():
                 if event.code == "KEY_LEFT":
                         if event.state == 1:
                             pz.spinLeft(speed)
-                            time.sleep(0.8)
+                            time.sleep(BURST)
                             pz.stop()
                         elif event.state == 2:
                             pz.spinLeft(speed)
