@@ -86,12 +86,12 @@ def remotecontrol():
                             pz.spinLeft(speed)
                         elif event.state == 0:
                             pz.stop()
-                if event.code == "KEY_." or event.code == "KEY_>":
+                if event.code == "KEY_DOT" or event.code == "KEY_>":
                     if event.state == 1 or event.state == 2:
                         speed = min(100, speed+10)
                         mylcd.lcd_display_string("Speed = %d  " % speed, 1)
                         mylcd.lcd_display_string("Press E to End  ", 2)
-                if event.code == "KEY_," or event.code == "KEY_<":
+                if event.code == "KEY_COMMA" or event.code == "KEY_<":
                     if event.state == 1 or event.state == 2:
                         speed = max (0, speed-10)
                         mylcd.lcd_display_string("Speed = %d  " % speed, 1)
