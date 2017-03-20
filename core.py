@@ -46,7 +46,7 @@ def remotecontrol():
     speed = 100
     mylcd.lcd_display_string("Speed = %d    " % speed , 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
-    GO == 1
+    GO = 1
     while GO == 1:
             for event in get_key():
                 if event.code == "KEY_UP":
