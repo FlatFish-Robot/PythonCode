@@ -134,6 +134,8 @@ def speedrun():
                 break
     while GO == True:
         for event in get_key():
+            RIGHTIR = pz.readInput(0) 
+            LEFTIR = pz.readInput(1)
             mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
             mylcd.lcd_display_string("Press S to STOP ", 2)
             pz.forward(100)
@@ -155,10 +157,9 @@ def speedrun():
                     elif event.code == "KEY_S":
                        pz.stop
                        GO = False
-                       break
             elif event.code == "KEY_E":
                 pz.stop
-                break
+                GO = False
 
 #end functions
 #_____________________________________________________________________________
