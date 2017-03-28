@@ -44,6 +44,7 @@ def remotecontrol():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
+    turnspeed=100
     mylcd.lcd_display_string("Speed = %d    " % speed , 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     GO = 1
@@ -89,18 +90,29 @@ def remotecontrol():
                 if event.code == "KEY_DOT" or event.code == "KEY_>":
                     if event.state == 1 or event.state == 2:
                         speed = min(100, speed+10)
+                        turnspeed = min(100, turnspeed+10)
                         mylcd.lcd_display_string("Speed = %d  " % speed, 1)
                         mylcd.lcd_display_string("Press E to End  ", 2)
                 if event.code == "KEY_COMMA" or event.code == "KEY_<":
                     if event.state == 1 or event.state == 2:
                         speed = max (0, speed-10)
+                        turnspeed = max (0, turnspeed-10)
                         mylcd.lcd_display_string("Speed = %d  " % speed, 1)
                         mylcd.lcd_display_string("Press E to End  ", 2)
+                if event.code == "KEY_Q":
+                    if event.state == 1 or event.state == 2:
+                        speed = 75
+                        turnspeed = 100
+                if event.code == "KEY_W":
+                    if event.state == 1 or event.state == 2:
+                        speed = 60
+                        turnspeed = 80
                 if event.code == "KEY_SPACE":
                     if event.state == 1 or event.state == 2:
                         pz.stop()
                 if event.code == "KEY_E":
                     if event.state == 1 or event.state == 2:
+                        pz.stop()
                         GO == 0
 
 def linefollower():
@@ -108,21 +120,8 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
-
-def automaze():
-    mylcd.lcd_display_string("Auto Maze       ", 1)
-    mylcd.lcd_display_string("Press E to End  ", 2)
-    time.sleep(2)
-    speed = 100
-
-def speedrun():
-    mylcd.lcd_display_string("Auto Maze       ", 1)
-    mylcd.lcd_display_string("Press E to End  ", 2)
-    time.sleep(2)
-    speed = 100
-    GO = True
-    PREP = True
-    while PREP == True:
+    
+    while PREP == True: #setup ready for line following
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
@@ -133,22 +132,161 @@ def speedrun():
                 GO = False
                 PREP = False
                 
-    while GO == True:
+    mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+    mylcd.lcd_display_string("Press S to STOP ", 2)
+    
+    while GO == True: #line following program
+        RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+        LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
+        if RIGHTLINE == 0:
+            pz.spinRight(100)
+            time.sleep(0.3)
+        elif LEFTLINE == 0:
+            pz.spinLeft(100)
+            time.sleep(0.3)
+        elif RIGHTLINE == 1 and LEFTLINE == 1:
+            pz.forward(50)
+
+        #keys for escape
+        for event in get_key(): #need to seperate keys and pins
+            if event.code == "KEY_S":
+                pz.stop
+                while True:
+                    mylcd.lcd_display_string("Press G to GO   ", 1)
+                    mylcd.lcd_display_string("Press E to EXIT ", 2)
+                    if event.code == "KEY_G":
+                        break
+                    elif event.code == "KEY_E":
+                       pz.stop
+                       GO = False
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = False
+                
+def automaze():
+    mylcd.lcd_display_string("Auto Maze       ", 1)
+    mylcd.lcd_display_string("Press E to End  ", 2)
+    time.sleep(2)
+    speed = 100
+    GO = True
+    PREP = True
+    while PREP == True: #get ready to go
         for event in get_key():
-            RIGHTIR = pz.readInput(0) 
-            LEFTIR = pz.readInput(1)
-            mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-            mylcd.lcd_display_string("Press S to STOP ", 2)
+            mylcd.lcd_display_string("Press G to GO   ", 1)
+            mylcd.lcd_display_string("Press E to End  ", 2)
+            if event.code == "KEY_G":
+                PREP = False
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = False
+                PREP = False
+    while GO == True: #run actual speed test
+        RIGHTIR = pz.readInput(0) #assign right IR to a variable
+        LEFTIR = pz.readInput(1) #assign left IR to a variable
+        RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
+        STEP = 0 # start step count
+        mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+        mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+        pz.forward(100)
+        
+        #steps to follow to complete the maze
+        if RANGE < 5 and STEP == 0: #first right turn
+            pz.stop()
+            pz.spinRight(100)
+            time.sleep(0.8)
+            pz.stop()
             pz.forward(100)
-            if RIGHTIR == 1:
-                pz.spinLeft(100)
-                time.sleep(0.3)
-                pz.forward(100)
-            elif LEFTIR == 1:
-                pz.spinRight(100)
-                time.sleep(0.3)
-                pz.forward(100)
-            elif event.code == "KEY_S":
+            STEP = 1
+        if RANGE < 5 and STEP == 1: #second right turn
+            pz.stop()
+            pz.spinRight(100)
+            time.sleep(0.8)
+            pz.stop()
+            pz.forward(100)
+            STEP = 2
+        if RANGE < 5 and STEP == 2: #third right
+            pz.stop()
+            pz.spinRight(100)
+            time.sleep(0.8)
+            pz.stop()
+            pz.forward(100)
+            STEP = 3
+        if RANGE < 5 and STEP == 2: #first left
+            pz.stop()
+            pz.spinLeft(100)
+            time.sleep(0.8)
+            pz.stop()
+            pz.forward(100)
+            STEP = 4
+        if RANGE < 5 and STEP == 4: #second left
+            pz.stop()
+            pz.spinLeft(100)
+            time.sleep(0.8)
+            pz.stop()
+            pz.forward(100)
+            STEP = 5
+        if RANGE < 5 and STEP == 5: #third left
+            pz.stop()
+            pz.spinLeft(100)
+            time.sleep(0.8)
+            pz.stop()
+            pz.forward(100)
+            STEP = 6
+
+        #emergency wall avoidance protocol    
+        if leftIR == 0:
+            pz.spinRight(100)
+            time.sleep(0.3)
+        elif LEFTLINE == 0:
+            pz.spinLeft(100)
+            time.sleep(0.3)
+            
+        for event in get_key(): #need to seperate pins and keys
+            if event.code == "KEY_S":
+                pz.stop
+                while True:
+                    mylcd.lcd_display_string("Press G to GO   ", 1)
+                    mylcd.lcd_display_string("Press S to STOP ", 2)
+                    if event.code == "KEY_G":
+                        break
+                    elif event.code == "KEY_S":
+                       pz.stop
+                       GO = False
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = False
+
+def speedrun():
+    mylcd.lcd_display_string("Speed Run       ", 1)
+    mylcd.lcd_display_string("Press E to End  ", 2)
+    time.sleep(2)
+    speed = 100
+    GO = True
+    PREP = True
+    while PREP == True: #get ready to go
+        for event in get_key():
+            mylcd.lcd_display_string("Press G to GO   ", 1)
+            mylcd.lcd_display_string("Press E to End  ", 2)
+            if event.code == "KEY_G":
+                PREP = False
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = False
+                PREP = False
+    while GO == True: #run actual speed test
+        RIGHTIR = pz.readInput(0) 
+        LEFTIR = pz.readInput(1)
+        mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+        mylcd.lcd_display_string("Press S to STOP ", 2)
+        pz.forward(100)
+        if RIGHTIR == 1:
+            pz.spinLeft(100)
+            time.sleep(0.3)
+        elif LEFTIR == 1:
+            pz.spinRight(100)
+            time.sleep(0.3)
+        for event in get_key(): #need to seperate pins and keys, the following code is the same for all functions
+            if event.code == "KEY_S":
                 pz.stop
                 while True:
                     mylcd.lcd_display_string("Press G to GO   ", 1)
@@ -180,11 +318,23 @@ try:
             if event.code == "KEY_S":
                 mylcd.lcd_display_string("Shutting Down   ", 1)
                 mylcd.lcd_display_string("                ", 2)
+                pz.stop()
+                pz.cleanup()
                 os.system("shutdown now -h")
+            elif event.code == "KEY_E":
+                mylcd.lcd_display_string("Ending Program  ", 1)
+                mylcd.lcd_display_string("                ", 2)
+                pz.stop()
+                pz.cleanup()
+                sys.exit()
             elif event.code == "KEY_1":
                 remotecontrol()
             elif event.code == "KEY_2":
                 speedrun()
+            elif event.code == "KEY_3":
+                linefollower()
+            elif event.code == "KEY_4":
+                automaze()
             
 
 except KeyboardInterrupt:
