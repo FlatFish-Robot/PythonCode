@@ -113,6 +113,7 @@ def remotecontrol():
                 if event.code == "KEY_E":
                     if event.state == 1 or event.state == 2:
                         pz.stop()
+                        break
                         GO == 0
 
 def linefollower():
