@@ -147,7 +147,7 @@ def linefollower():
         elif LEFTLINE == 0:
             pz.spinLeft(100)
             time.sleep(0.3)
-        elif RIGHTLINE == 1 and LEFTLINE == 1:
+        else:
             pz.forward(50)
         #KEYS = True
         #while KEYS == True:
