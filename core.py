@@ -150,7 +150,7 @@ def linefollower():
         elif RIGHTLINE == 1 and LEFTLINE == 1:
             pz.forward(50)
         KEYS = True
-        while KEYS == True
+        while KEYS == True:
             #keys for escape
             for event in get_key(): #need to seperate keys and pins
                 if event.code == "KEY_S":
