@@ -119,10 +119,7 @@ def remotecontrol():
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
-    time.sleep(2)
-    speed = 100
-    PREP = 1
-    GO = True
+    
     
     #while PREP == 1: #setup ready for line following
     #    for event in get_key():
