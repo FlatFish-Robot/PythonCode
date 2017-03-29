@@ -122,23 +122,23 @@ def linefollower():
     time.sleep(2)
     speed = 100
     PREP = 1
-    GO = 1
+    GO = True
     
-    while PREP == 1: #setup ready for line following
-        for event in get_key():
-            mylcd.lcd_display_string("Press G to GO   ", 1)
-            mylcd.lcd_display_string("Press E to End  ", 2)
-            if event.code == "KEY_G":
-                PREP = 0
-            elif event.code == "KEY_E":
-                pz.stop
-                GO = 0
-                PREP = 0
-                
-    mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-    mylcd.lcd_display_string("Press S to STOP ", 2)
+    #while PREP == 1: #setup ready for line following
+    #    for event in get_key():
+    #        mylcd.lcd_display_string("Press G to GO   ", 1)
+    #        mylcd.lcd_display_string("Press E to End  ", 2)
+    #        if event.code == "KEY_G":
+    #            PREP = 0
+    #        elif event.code == "KEY_E":
+    #            pz.stop
+    #            GO = 0
+    #            PREP = 0
+    #            
+    #mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+    #mylcd.lcd_display_string("Press S to STOP ", 2)
     
-    while GO == 1: #line following program
+    while True: #line following program
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
         if RIGHTLINE == 0:
