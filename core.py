@@ -121,6 +121,8 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
+    PREP = True
+    GO = True
     
     while PREP == True: #setup ready for line following
         for event in get_key():
@@ -163,6 +165,7 @@ def linefollower():
             elif event.code == "KEY_E":
                 pz.stop
                 GO = False
+                break
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
