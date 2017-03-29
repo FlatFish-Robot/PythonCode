@@ -149,23 +149,25 @@ def linefollower():
             time.sleep(0.3)
         elif RIGHTLINE == 1 and LEFTLINE == 1:
             pz.forward(50)
-
-        #keys for escape
-        for event in get_key(): #need to seperate keys and pins
-            if event.code == "KEY_S":
-                pz.stop
-                while True:
-                    mylcd.lcd_display_string("Press G to GO   ", 1)
-                    mylcd.lcd_display_string("Press E to EXIT ", 2)
-                    if event.code == "KEY_G":
-                        break
-                    elif event.code == "KEY_E":
-                       pz.stop
-                       GO = False
-            elif event.code == "KEY_E":
-                pz.stop
-                GO = False
-                break
+        KEYS = True
+        while KEYS = True
+            #keys for escape
+            for event in get_key(): #need to seperate keys and pins
+                if event.code == "KEY_S":
+                    pz.stop
+                    while True:
+                        mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press E to EXIT ", 2)
+                        if event.code == "KEY_G":
+                            break
+                        elif event.code == "KEY_E":
+                           pz.stop
+                           GO = False
+                elif event.code == "KEY_E":
+                    pz.stop
+                    GO = False
+                    break
+                KEYS = False
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
