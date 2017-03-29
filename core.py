@@ -140,8 +140,10 @@ def linefollower():
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
         if RIGHTLINE == 0:
             pz.spinRight(60)
+            time.sleep(0.5)
         elif LEFTLINE == 0:
             pz.spinLeft(60)
+            time.sleep(0.5)
         else:
             pz.forward(50)
             time.sleep(0.5)
