@@ -138,10 +138,10 @@ def linefollower():
     while True: #line following program
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
-        if RIGHTLINE == 0:
+        if RIGHTLINE == 1:
             pz.spinRight(60)
             time.sleep(0.3)
-        elif LEFTLINE == 0:
+        elif LEFTLINE == 1:
             pz.spinLeft(60)
             time.sleep(0.3)
         else:
