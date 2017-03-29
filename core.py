@@ -163,6 +163,7 @@ def linefollower():
                         elif event.code == "KEY_E":
                            pz.stop
                            GO = False
+                           break
                 elif event.code == "KEY_E":
                     pz.stop
                     GO = False
