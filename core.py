@@ -103,18 +103,21 @@ def remotecontrol():
                     if event.state == 1 or event.state == 2:
                         speed = 75
                         turnspeed = 100
+                        mylcd.lcd_display_string("Fast Maze       ", 1)
+                        mylcd.lcd_display_string("Press E to End  ", 2)
                 if event.code == "KEY_W":
                     if event.state == 1 or event.state == 2:
                         speed = 60
                         turnspeed = 80
+                        mylcd.lcd_display_string("slow Maze       ", 1)
+                        mylcd.lcd_display_string("Press E to End  ", 2)
                 if event.code == "KEY_SPACE":
                     if event.state == 1 or event.state == 2:
                         pz.stop()
                 if event.code == "KEY_E":
                     if event.state == 1 or event.state == 2:
                         pz.stop()
-                        GO == 0
-                        break
+                        GO = 0
 
 
 def fuzzyline():
