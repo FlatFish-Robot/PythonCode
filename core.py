@@ -140,8 +140,8 @@ def fuzzyline():
     mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
     mylcd.lcd_display_string("Press S to STOP ", 2)
 
-    RMOTOR = 1
-    LMOTOR = 2
+    RMOTOR = 0
+    LMOTOR = 1
     SPEED = 50
     
     while GO == 1: #line following program
