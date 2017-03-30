@@ -173,16 +173,17 @@ def fuzzyline():
         if RIGHTLINE == 1 and GO == 1:
             pz.setMotor(RMOTOR, 0)
             pz.setMotor(LMOTOR, LFSPEED)
-            #time.sleep(0.1)
+            time.sleep(0.4)
         #fuzz left if line hit left
         if LEFTLINE == 1 and GO == 1:
             pz.setMotor(LMOTOR, 0)
             pz.setMotor(RMOTOR, LFSPEED)
-            #time.sleep(0.1)
+            time.sleep(0.4)
         #search if blank
         if LEFTLINE == 0 and RIGHTLINE == 0 and GO == 1:
             pz.setMotor(LMOTOR, LFSPEED)
             pz.setMotor(RMOTOR, 0)
+            time.sleep(0.4)
             
     
 
