@@ -113,29 +113,112 @@ def remotecontrol():
                 if event.code == "KEY_E":
                     if event.state == 1 or event.state == 2:
                         pz.stop()
-                        break
                         GO == 0
+                        break
+
+
+def fuzzyline:
+    mylcd.lcd_display_string("Fuzzy Line      ", 1)
+    mylcd.lcd_display_string("Press E to End  ", 2)
+    PREP = 1
+    GO = 1
+    
+    while PREP == 1: #setup ready for line following
+        for event in get_key():
+            mylcd.lcd_display_string("Press G to GO   ", 1)
+            mylcd.lcd_display_string("Press E to End  ", 2)
+            if event.code == "KEY_G":
+                PREP = 0
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = 0
+                PREP = 0
+                
+    mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+    mylcd.lcd_display_string("Press S to STOP ", 2)
+
+    RMOTOR = 1
+    LMOTOR = 2
+    SPEED = 50
+    
+    while GO == 1: #line following program
+        RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+        LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
+
+        #fuzz right if line hit right
+        if RIGHTLINE == 1:
+            pz.setMotor(LMOTOR, SPEED
+            #time.sleep(0.1)
+
+        #fuzz left if line hit left
+        elif LEFTLINE == 1:
+            pz.setMotor(RMOTOR, SPEED)
+            #time.sleep(0.1)
+
+        #search if blank
+        elif LEFTLINE == 0 and RIGHTLINE == 0:
+            while RIGHTLINE == 0 and LEFTLINE ==0:
+                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
+                pz.setMotor(LMOTOR, SPEED)
+                time.sleep(0.4)
+                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
+                pz.stop()
+                pz.setMotor(RMOTOR, SPEED)
+                time.sleep(0.4)
+                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
+                pz.stop()
+
+        #keys for escape
+        KEYS = True
+        
+        while KEYS == True:
+            #keys for escape
+            for event in get_key(): #need to seperate keys and pins
+                if event.code == "KEY_S":
+                    pz.stop
+                    while True:
+                        mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press E to EXIT ", 2)
+                        if event.code == "KEY_G":
+                            break
+                        elif event.code == "KEY_E":
+                           pz.stop
+                           GO = False
+                           KEYS = False
+                           break
+                elif event.code == "KEY_E":
+                    pz.stop
+                    GO = False
+                    KEYS = False
+                else:
+                    time.sleep(0.5)
+            
+    
 
 def linefollower():
     mylcd.lcd_display_string("Line Follower   ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
+    PREP = 1
+    GO = 1
     
+    while PREP == 1: #setup ready for line following
+        for event in get_key():
+            mylcd.lcd_display_string("Press G to GO   ", 1)
+            mylcd.lcd_display_string("Press E to End  ", 2)
+            if event.code == "KEY_G":
+                PREP = 0
+            elif event.code == "KEY_E":
+                pz.stop
+                GO = 0
+                PREP = 0
+                
+    mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+    mylcd.lcd_display_string("Press S to STOP ", 2)
     
-    #while PREP == 1: #setup ready for line following
-    #    for event in get_key():
-    #        mylcd.lcd_display_string("Press G to GO   ", 1)
-    #        mylcd.lcd_display_string("Press E to End  ", 2)
-    #        if event.code == "KEY_G":
-    #            PREP = 0
-    #        elif event.code == "KEY_E":
-    #            pz.stop
-    #            GO = 0
-    #            PREP = 0
-    #            
-    #mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-    #mylcd.lcd_display_string("Press S to STOP ", 2)
-    
-    while True: #line following program
+    while GO == 1: #line following program
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
         if RIGHTLINE == 1:
@@ -145,28 +228,32 @@ def linefollower():
             pz.spinRight(60)
             #time.sleep(0.1)
         elif LEFTLINE == 0 and RIGHTLINE == 0:
-            pz.forward(50)
+            pz.forward(40)
             #time.sleep(0.1)
-        #KEYS = True
-        #while KEYS == True:
+            
+        KEYS = True
+        
+        while KEYS == True:
             #keys for escape
-        #    for event in get_key(): #need to seperate keys and pins
-        #        if event.code == "KEY_S":
-        #            pz.stop
-        #            while True:
-        #                mylcd.lcd_display_string("Press G to GO   ", 1)
-        #                mylcd.lcd_display_string("Press E to EXIT ", 2)
-        #                if event.code == "KEY_G":
-        #                    break
-        #                elif event.code == "KEY_E":
-        #                   pz.stop
-        #                   GO = False
-        #                   break
-        #        elif event.code == "KEY_E":
-        #            pz.stop
-        #            GO = False
-        #            break
-        #        KEYS = False
+            for event in get_key(): #need to seperate keys and pins
+                if event.code == "KEY_S":
+                    pz.stop
+                    while True:
+                        mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press E to EXIT ", 2)
+                        if event.code == "KEY_G":
+                            break
+                        elif event.code == "KEY_E":
+                           pz.stop
+                           GO = False
+                           KEYS = False
+                           break
+                elif event.code == "KEY_E":
+                    pz.stop
+                    GO = False
+                    KEYS = False
+                else:
+                    time.sleep(0.5)
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
@@ -260,6 +347,9 @@ def automaze():
             elif event.code == "KEY_E":
                 pz.stop
                 GO = False
+                break
+            else:
+                time.sleep(0.5)
 
 def speedrun():
     mylcd.lcd_display_string("Speed Run       ", 1)
