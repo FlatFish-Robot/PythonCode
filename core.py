@@ -117,7 +117,7 @@ def remotecontrol():
                         break
 
 
-def fuzzyline:
+def fuzzyline():
     mylcd.lcd_display_string("Fuzzy Line      ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
@@ -430,6 +430,8 @@ try:
                 linefollower()
             elif event.code == "KEY_4":
                 automaze()
+            elif event.code == "KEY_5":
+                fuzzyline()
             
 
 except KeyboardInterrupt:
