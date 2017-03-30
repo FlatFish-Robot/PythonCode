@@ -418,7 +418,7 @@ try:
                 mylcd.lcd_display_string("                ", 2)
                 pz.stop()
                 pz.cleanup()
-                os.system("shutdown now -h")
+                os.system("sudo shutdown -h now")
             elif event.code == "KEY_ESC":
                 mylcd.lcd_display_string("Ending Program  ", 1)
                 mylcd.lcd_display_string("                ", 2)
