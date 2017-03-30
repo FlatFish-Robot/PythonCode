@@ -192,6 +192,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
+    LFSPEED = 40
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
@@ -211,13 +212,13 @@ def linefollower():
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
         if RIGHTLINE == 1:
-            pz.spinLeft(60)
+            pz.spinLeft(LFSPEED)
             #time.sleep(0.1)
         elif LEFTLINE == 1:
-            pz.spinRight(60)
+            pz.spinRight(LFSPEED)
             #time.sleep(0.1)
         elif LEFTLINE == 0 and RIGHTLINE == 0:
-            pz.forward(40)
+            pz.forward(LFSPEED)
             #time.sleep(0.1)
             
         #keys for escape
@@ -226,15 +227,16 @@ def linefollower():
                 pz.stop
                 HOLD = 1
                 while HOLD == 1:
-                    pz.stop()
-                    mylcd.lcd_display_string("Press G to GO   ", 1)
-                    mylcd.lcd_display_string("Press E to EXIT ", 2)
-                    if event.code == "KEY_G":
-                        HOLD == 0
-                    elif event.code == "KEY_E":
-                       pz.stop
-                       GO = 0
-                       HOLD = 0
+                    for event in get_key(): 
+                        pz.stop()
+                        mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press E to EXIT ", 2)
+                        if event.code == "KEY_G":
+                            HOLD == 0
+                        elif event.code == "KEY_E":
+                           pz.stop
+                           GO = 0
+                           HOLD = 0
             else:
                 time.sleep(0.5)
                 
