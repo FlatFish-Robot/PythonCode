@@ -144,6 +144,7 @@ def fuzzyline():
     RMOTOR = 0
     LMOTOR = 1
     SPEED = 30
+    pz.stop()
 
     while GO == 1:
         #keys polling
@@ -156,12 +157,13 @@ def fuzzyline():
                             pz.stop()
                             mylcd.lcd_display_string("Press G to GO   ", 1)
                             mylcd.lcd_display_string("Press E to EXIT ", 2)
-                            if event.code == "KEY_G":
-                                HOLD = 0
-                            elif event.code == "KEY_E":
-                               pz.stop
-                               GO = 0
-                               HOLD = 0
+                            for event in get_key():
+                                if event.code == "KEY_G":
+                                    HOLD = 0
+                                elif event.code == "KEY_E":
+                                   pz.stop
+                                   GO = 0
+                                   HOLD = 0
         #line follow program                       
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
