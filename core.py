@@ -146,7 +146,6 @@ def linefollower():
         LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
         if RIGHTLINE == 1:
             pz.spinLeft(LFSPEED)
-            #time.sleep(0.1)
         elif LEFTLINE == 1:
             pz.spinRight(LFSPEED)
             #time.sleep(0.1)
@@ -274,19 +273,21 @@ def speedrun():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
-    GO = True
-    PREP = True
-    while PREP == True: #get ready to go
+    GO = 1
+    PREP = 1
+    
+    while PREP == 1: #get ready to go
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
             if event.code == "KEY_G":
-                PREP = False
+                PREP = 0
             elif event.code == "KEY_E":
                 pz.stop
-                GO = False
-                PREP = False
-    while GO == True: #run actual speed test
+                GO = 0
+                PREP = 0
+                
+    while GO == 1: #run actual speed test
         RIGHTIR = pz.readInput(0) 
         LEFTIR = pz.readInput(1)
         mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
@@ -301,17 +302,18 @@ def speedrun():
         for event in get_key(): #need to seperate pins and keys, the following code is the same for all functions
             if event.code == "KEY_S":
                 pz.stop
-                while True:
+                HOLD = 1
+                while HOLD == 1:
+                    for event in get_key():
+                        pz.stop()
                     mylcd.lcd_display_string("Press G to GO   ", 1)
-                    mylcd.lcd_display_string("Press S to STOP ", 2)
+                    mylcd.lcd_display_string("Press E to EXIT ", 2)
                     if event.code == "KEY_G":
-                        break
-                    elif event.code == "KEY_S":
+                        HOLD = 0
+                    elif event.code == "KEY_E":
                        pz.stop
-                       GO = False
-            elif event.code == "KEY_E":
-                pz.stop
-                GO = False
+                       GO = 0
+                       HOLD = 0
 
 #end functions
 #_____________________________________________________________________________
@@ -348,8 +350,6 @@ try:
                 linefollower()
             elif event.code == "KEY_4":
                 automaze()
-            elif event.code == "KEY_5":
-                fuzzyline()
             
 
 except KeyboardInterrupt:
