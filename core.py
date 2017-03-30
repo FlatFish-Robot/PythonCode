@@ -147,7 +147,7 @@ def fuzzyline():
 
         #fuzz right if line hit right
         if RIGHTLINE == 1:
-            pz.setMotor(LMOTOR, SPEED
+            pz.setMotor(LMOTOR, SPEED)
             #time.sleep(0.1)
 
         #fuzz left if line hit left
