@@ -175,27 +175,26 @@ def fuzzyline():
                 pz.stop()
 
         #keys for escape
-        KEYS = True
+        KEYS = 1
         
-        while KEYS == True:
+        while KEYS == 1:
             #keys for escape
             for event in get_key(): #need to seperate keys and pins
                 if event.code == "KEY_S":
-                    pz.stop
-                    while True:
-                        mylcd.lcd_display_string("Press G to GO   ", 1)
-                        mylcd.lcd_display_string("Press E to EXIT ", 2)
-                        if event.code == "KEY_G":
-                            break
-                        elif event.code == "KEY_E":
-                           pz.stop
-                           GO = False
-                           KEYS = False
-                           break
-                elif event.code == "KEY_E":
-                    pz.stop
-                    GO = False
-                    KEYS = False
+                    if event.state == 1 or event.state == 2:
+                        pz.stop
+                        HOLD = 1
+                        while HOLD == 1:
+                            mylcd.lcd_display_string("Press G to GO   ", 1)
+                            mylcd.lcd_display_string("Press E to EXIT ", 2)
+                            if event.code == "KEY_G":
+                                HOLD = 0
+                                KEYS = 0
+                            elif event.code == "KEY_E":
+                               pz.stop
+                               GO = 0
+                               KEYS = 0
+                               HOLD = 0
                 else:
                     time.sleep(0.5)
             
