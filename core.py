@@ -419,7 +419,7 @@ try:
                 pz.stop()
                 pz.cleanup()
                 os.system("shutdown now -h")
-            elif event.code == "KEY_E":
+            elif event.code == "KEY_ESC":
                 mylcd.lcd_display_string("Ending Program  ", 1)
                 mylcd.lcd_display_string("                ", 2)
                 pz.stop()
