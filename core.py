@@ -143,7 +143,7 @@ def fuzzyline():
 
     RMOTOR = 0
     LMOTOR = 1
-    SPEED = 40
+    LFSPEED = 40
     pz.stop()
 
     while GO == 1:
@@ -172,16 +172,17 @@ def fuzzyline():
         #fuzz right if line hit right
         if RIGHTLINE == 1 and GO == 1:
             pz.setMotor(RMOTOR, 0)
-            pz.setMotor(LMOTOR, SPEED)
+            pz.setMotor(LMOTOR, LFSPEED)
             #time.sleep(0.1)
         #fuzz left if line hit left
         if LEFTLINE == 1 and GO == 1:
             pz.setMotor(LMOTOR, 0)
-            pz.setMotor(RMOTOR, SPEED)
+            pz.setMotor(RMOTOR, LFSPEED)
             #time.sleep(0.1)
         #search if blank
         if LEFTLINE == 0 and RIGHTLINE == 0 and GO == 1:
-            pz.setMotor(LMOTOR, SPEED)
+            pz.setMotor(LMOTOR, LFSPEED)
+            pz.setMotor(RMOTOR, 0)
             
     
 
