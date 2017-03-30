@@ -125,7 +125,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
-    LFSPEED = 50
+    LFSPEED = 80
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
