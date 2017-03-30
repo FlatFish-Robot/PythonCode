@@ -292,13 +292,18 @@ def speedrun():
         LEFTIR = pz.readInput(1)
         mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
         mylcd.lcd_display_string("Press S to STOP ", 2)
-        pz.forward(100)
+
+        
         if RIGHTIR == 1:
             pz.spinLeft(100)
             time.sleep(0.3)
         elif LEFTIR == 1:
             pz.spinRight(100)
             time.sleep(0.3)
+        elif RIGHTIR == 0 and LEFTIR == 0:
+            pz.forward(100)
+
+            
         for event in get_key(): #need to seperate pins and keys, the following code is the same for all functions
             if event.code == "KEY_S":
                 pz.stop
