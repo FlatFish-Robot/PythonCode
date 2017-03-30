@@ -122,17 +122,17 @@ def remotecontrol():
 
 def fuzzyline():
     mylcd.lcd_display_string("Fuzzy Line      ", 1)
-    mylcd.lcd_display_string("Press E to End  ", 2)
+    mylcd.lcd_display_string("Press ESC to End", 2)
     PREP = 1
     GO = 1
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
-            mylcd.lcd_display_string("Press E to End  ", 2)
+            mylcd.lcd_display_string("Press ESC to End", 2)
             if event.code == "KEY_G":
                 PREP = 0
-            elif event.code == "KEY_E":
+            elif event.code == "KEY_ESC":
                 pz.stop
                 GO = 0
                 PREP = 0
@@ -142,7 +142,7 @@ def fuzzyline():
 
     RMOTOR = 0
     LMOTOR = 1
-    SPEED = 50
+    SPEED = 30
     
     while GO == 1: #line following program
         RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
@@ -181,6 +181,7 @@ def fuzzyline():
                     pz.stop
                     HOLD = 1
                     while HOLD == 1:
+                        pz.stop()
                         mylcd.lcd_display_string("Press G to GO   ", 1)
                         mylcd.lcd_display_string("Press E to EXIT ", 2)
                         if event.code == "KEY_G":
