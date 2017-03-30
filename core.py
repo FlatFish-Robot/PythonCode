@@ -130,7 +130,7 @@ def fuzzyline():
     while PREP == 1: #setup ready for line following
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
-            mylcd.lcd_display_string("Press ESC to End", 2)
+            mylcd.lcd_display_string("Press E   to End", 2)
             if event.code == "KEY_G":
                 PREP = 0
             elif event.code == "KEY_ESC":
@@ -175,12 +175,12 @@ def fuzzyline():
             pz.setMotor(LMOTOR, SPEED)
             #time.sleep(0.1)
         #fuzz left if line hit left
-        elif LEFTLINE == 1 and GO == 1:
+        if LEFTLINE == 1 and GO == 1:
             pz.setMotor(LMOTOR, 0)
             pz.setMotor(RMOTOR, SPEED)
             #time.sleep(0.1)
         #search if blank
-        elif LEFTLINE == 0 and RIGHTLINE == 0 and GO == 1:
+        if LEFTLINE == 0 and RIGHTLINE == 0 and GO == 1:
             pz.setMotor(LMOTOR, SPEED)
             
     
