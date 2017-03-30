@@ -192,7 +192,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
-    LFSPEED = 40
+    LFSPEED = 50
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
@@ -217,7 +217,7 @@ def linefollower():
         elif LEFTLINE == 1:
             pz.spinRight(LFSPEED)
             #time.sleep(0.1)
-        elif LEFTLINE == 0 and RIGHTLINE == 0:
+        elif LEFTLINE == RIGHTLINE:
             pz.forward(LFSPEED)
             #time.sleep(0.1)
             
