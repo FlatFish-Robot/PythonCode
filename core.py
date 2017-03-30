@@ -181,10 +181,7 @@ def fuzzyline():
             #time.sleep(0.1)
         #search if blank
         elif LEFTLINE == 0 and RIGHTLINE == 0 and GO == 1:
-            while RIGHTLINE == 0 and LEFTLINE ==0:
-                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
-                pz.setMotor(LMOTOR, SPEED)
+            pz.setMotor(LMOTOR, SPEED)
             
     
 
