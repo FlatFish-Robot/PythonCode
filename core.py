@@ -125,6 +125,7 @@ def fuzzyline():
     mylcd.lcd_display_string("Press ESC to End", 2)
     PREP = 1
     GO = 1
+    time.sleep(2)
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
@@ -144,42 +145,41 @@ def fuzzyline():
     LMOTOR = 1
     SPEED = 30
 
-    for event in get_key(): #need to seperate keys and pins
-            if event.code == "KEY_S":
-                if event.state == 1 or event.state == 2:
-                    pz.stop
-                    HOLD = 1
-                    while HOLD == 1:
-                        pz.stop()
-                        mylcd.lcd_display_string("Press G to GO   ", 1)
-                        mylcd.lcd_display_string("Press E to EXIT ", 2)
-                        if event.code == "KEY_G":
-                            HOLD = 0
-                        elif event.code == "KEY_E":
-                           pz.stop
-                           GO = 0
-                           HOLD = 0
-            else:
-                while GO == 1: #line following program
-                    RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                    LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
+    while GO == 1:
+        #keys polling
+        for event in get_key(): #need to seperate keys and pins
+                if event.code == "KEY_S":
+                    if event.state == 1 or event.state == 2:
+                        pz.stop
+                        HOLD = 1
+                        while HOLD == 1:
+                            pz.stop()
+                            mylcd.lcd_display_string("Press G to GO   ", 1)
+                            mylcd.lcd_display_string("Press E to EXIT ", 2)
+                            if event.code == "KEY_G":
+                                HOLD = 0
+                            elif event.code == "KEY_E":
+                               pz.stop
+                               GO = 0
+                               HOLD = 0
+        #line follow program                       
+        RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+        LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 
-                    #fuzz right if line hit right
-                    if RIGHTLINE == 1:
-                        pz.setMotor(LMOTOR, SPEED)
-                        #time.sleep(0.1)
-
-                    #fuzz left if line hit left
-                    if LEFTLINE == 1:
-                        pz.setMotor(RMOTOR, SPEED)
-                        #time.sleep(0.1)
-
-                    #search if blank
-                    if LEFTLINE == 0 and RIGHTLINE == 0:
-                        while RIGHTLINE == 0 and LEFTLINE ==0:
-                            RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                            LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
-                            pz.setMotor(LMOTOR, SPEED)
+        #fuzz right if line hit right
+        if RIGHTLINE == 1:
+            pz.setMotor(LMOTOR, SPEED)
+            #time.sleep(0.1)
+        #fuzz left if line hit left
+        elif LEFTLINE == 1:
+            pz.setMotor(RMOTOR, SPEED)
+            #time.sleep(0.1)
+        #search if blank
+        elif LEFTLINE == 0 and RIGHTLINE == 0:
+            while RIGHTLINE == 0 and LEFTLINE ==0:
+                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
+                pz.setMotor(LMOTOR, SPEED)
             
     
 
