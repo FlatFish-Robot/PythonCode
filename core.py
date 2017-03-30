@@ -143,39 +143,8 @@ def fuzzyline():
     RMOTOR = 0
     LMOTOR = 1
     SPEED = 30
-    
-    while GO == 1: #line following program
-        RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-        LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 
-        #fuzz right if line hit right
-        if RIGHTLINE == 1:
-            pz.setMotor(LMOTOR, SPEED)
-            #time.sleep(0.1)
-
-        #fuzz left if line hit left
-        if LEFTLINE == 1:
-            pz.setMotor(RMOTOR, SPEED)
-            #time.sleep(0.1)
-
-        #search if blank
-        if LEFTLINE == 0 and RIGHTLINE == 0:
-            while RIGHTLINE == 0 and LEFTLINE ==0:
-                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
-                pz.setMotor(LMOTOR, SPEED)
-                time.sleep(0.4)
-                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
-                pz.stop()
-                pz.setMotor(RMOTOR, SPEED)
-                time.sleep(0.4)
-                RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-                LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
-                pz.stop()
-        
-        #keys for escape
-        for event in get_key(): #need to seperate keys and pins
+    for event in get_key(): #need to seperate keys and pins
             if event.code == "KEY_S":
                 if event.state == 1 or event.state == 2:
                     pz.stop
@@ -191,7 +160,26 @@ def fuzzyline():
                            GO = 0
                            HOLD = 0
             else:
-                time.sleep(0.5)
+                while GO == 1: #line following program
+                    RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                    LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
+
+                    #fuzz right if line hit right
+                    if RIGHTLINE == 1:
+                        pz.setMotor(LMOTOR, SPEED)
+                        #time.sleep(0.1)
+
+                    #fuzz left if line hit left
+                    if LEFTLINE == 1:
+                        pz.setMotor(RMOTOR, SPEED)
+                        #time.sleep(0.1)
+
+                    #search if blank
+                    if LEFTLINE == 0 and RIGHTLINE == 0:
+                        while RIGHTLINE == 0 and LEFTLINE ==0:
+                            RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+                            LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
+                            pz.setMotor(LMOTOR, SPEED)
             
     
 
