@@ -151,12 +151,12 @@ def fuzzyline():
             #time.sleep(0.1)
 
         #fuzz left if line hit left
-        elif LEFTLINE == 1:
+        if LEFTLINE == 1:
             pz.setMotor(RMOTOR, SPEED)
             #time.sleep(0.1)
 
         #search if blank
-        elif LEFTLINE == 0 and RIGHTLINE == 0:
+        if LEFTLINE == 0 and RIGHTLINE == 0:
             while RIGHTLINE == 0 and LEFTLINE ==0:
                 RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
                 LEFTLINE = pz.readInput(3) #assign left line sensor to a variable 
