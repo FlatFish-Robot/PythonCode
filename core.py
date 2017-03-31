@@ -125,7 +125,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
-    LFSPEED = 80
+    LFSPEED = 90
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
@@ -150,27 +150,27 @@ def linefollower():
             pz.spinRight(LFSPEED)
             #time.sleep(0.1)
         elif LEFTLINE == RIGHTLINE:
-            pz.forward(20)
+            pz.forward(10)
             #time.sleep(0.1)
             
         #keys for escape
-   #     for event in get_key(): #need to seperate keys and pins
-    #        if event.code == "KEY_S":
-     #           pz.stop
-      #          HOLD = 1
-       #         while HOLD == 1:
-        #            for event in get_key(): 
-         #               pz.stop()
-          #              mylcd.lcd_display_string("Press G to GO   ", 1)
-           #             mylcd.lcd_display_string("Press E to EXIT ", 2)
-            #            if event.code == "KEY_G":
-             #               HOLD == 0
-              #          elif event.code == "KEY_E":
-               #            pz.stop
-              #             GO = 0
-             #              HOLD = 0
-           # else:
-            #    time.sleep(0.5)
+        for event in get_key(): #need to seperate keys and pins
+            if event.code == "KEY_S":
+                pz.stop
+                HOLD = 1
+                while HOLD == 1:
+                    for event in get_key(): 
+                        pz.stop()
+                       mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press E to EXIT ", 2)
+                        if event.code == "KEY_G":
+                            HOLD == 0
+                        elif event.code == "KEY_E":
+                           pz.stop
+                           GO = 0
+                           HOLD = 0
+                        #else:
+                           #time.sleep(0.5)
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
