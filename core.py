@@ -143,19 +143,18 @@ def linefollower():
                 PREP = 0
                 
     while GO == 1:
-        while button.is_pressed == True:
-            pz.stop()
+        if button.is_pressed == True:
             mylcd.lcd_display_string("Switch to go    ", 1)
             mylcd.lcd_display_string("Press E to EXIT ", 2)
             for event in get_key():
                 if event.code == "KEY_E":
-                   GO = 0
+                    GO = 0
                                   
         else:
             mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-            mylcd.lcd_display_string("Use switch      ", 2)
-            RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-            LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
+            mylcd.lcd_display_string("Use switch and E", 2)
+            LEFTLINE = pz.readInput(2) #assign right line sensor to a variable
+            RIGHTLINE = pz.readInput(3) #assign left line sensor to a variable   
             if RIGHTLINE == 1:
                 pz.spinRight(LFSPEED)
                 #time.sleep(0.5)
