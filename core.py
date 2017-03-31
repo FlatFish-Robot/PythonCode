@@ -170,7 +170,7 @@ def linefollower():
             elif LEFTLINE == 1:
                 pz.spinRight(LFSPEED)
                 #time.sleep(0.1)
-            elif LEFTLINE == RIGHTLINE:
+            elif LEFTLINE == 0 and RIGHTLINE == 0:
                 pz.forward(20)
                 #time.sleep(0.1)
 
