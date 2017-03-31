@@ -129,7 +129,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
-    LFSPEED = 100
+    LFSPEED = 100 #only changes cornering speed
     pz.stop()
     
     while PREP == 1: #setup ready for line following
@@ -163,10 +163,10 @@ def linefollower():
                 pz.spinLeft(LFSPEED)
                 #time.sleep(0.5)
             elif LEFTLINE == 0 and RIGHTLINE == 0:
-                pz.forward(11)
+                pz.forward(31)
                 #time.sleep(0.5)
             elif LEFTLINE == 1 and RIGHTLINE == 1:
-                pz.reverse(11)
+                pz.reverse(31)
                 #time.sleep(0.5)
                 
 def automaze():
