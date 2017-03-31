@@ -150,7 +150,7 @@ def linefollower():
             pz.spinRight(LFSPEED)
             #time.sleep(0.1)
         elif LEFTLINE == RIGHTLINE:
-            pz.forward(10)
+            pz.forward(20)
             #time.sleep(0.1)
             
         #keys for escape
