@@ -139,7 +139,6 @@ def linefollower():
             if event.code == "KEY_G":
                 PREP = 0
             elif event.code == "KEY_E":
-                pz.stop
                 GO = 0
                 PREP = 0
                 
@@ -157,7 +156,6 @@ def linefollower():
                     mylcd.lcd_display_string("Switch to go    ", 1)
                     mylcd.lcd_display_string("Press E to EXIT ", 2)
                     if event.code == "KEY_E":
-                       pz.stop
                        GO = 0
                        
         else:
@@ -165,14 +163,16 @@ def linefollower():
             LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
             if RIGHTLINE == 1 and LEFTLINE == 0:
                 pz.spinLeft(LFSPEED)
+                time.sleep(0.5)
             elif LEFTLINE == 1 and RIGHTLINE == 0:
                 pz.spinRight(LFSPEED)
-                #time.sleep(0.1)
+                time.sleep(0.5)
             elif LEFTLINE == 0 and RIGHTLINE == 0:
-                pz.forward(10)
+                pz.forward(11)
+                time.sleep(0.5)
             elif LEFTLINE == 1 and RIGHTLINE == 1:
-                pz.reverse(10)
-                #time.sleep(0.1)
+                pz.reverse(11)
+                time.sleep(0.5)
                 
 def automaze():
     pz.stop()
@@ -189,7 +189,6 @@ def automaze():
             if event.code == "KEY_G":
                 PREP = 0
             elif event.code == "KEY_E":
-                pz.stop
                 GO = 0
                 PREP = 0
                 
@@ -204,7 +203,6 @@ def automaze():
                     mylcd.lcd_display_string("Switch to go    ", 1)
                     mylcd.lcd_display_string("Press E to EXIT ", 2)
                     if event.code == "KEY_E":
-                       pz.stop
                        GO = 0
 
         else:
@@ -300,7 +298,6 @@ def speedrun():
                     mylcd.lcd_display_string("Switch to go    ", 1)
                     mylcd.lcd_display_string("Press E to EXIT ", 2)
                     if event.code == "KEY_E":
-                       pz.stop
                        GO = 0
         else:
             RIGHTIR = pz.readInput(0) 
