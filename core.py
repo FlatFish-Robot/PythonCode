@@ -161,7 +161,7 @@ def linefollower():
                 while HOLD == 1:
                     for event in get_key(): 
                         pz.stop()
-                       mylcd.lcd_display_string("Press G to GO   ", 1)
+                        mylcd.lcd_display_string("Press G to GO   ", 1)
                         mylcd.lcd_display_string("Press E to EXIT ", 2)
                         if event.code == "KEY_G":
                             HOLD == 0
