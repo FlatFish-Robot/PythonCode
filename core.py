@@ -167,11 +167,13 @@ def linefollower():
             LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
             if RIGHTLINE == 1:
                 pz.spinLeft(LFSPEED)
-            elif LEFTLINE == 1:
+            if LEFTLINE == 1:
                 pz.spinRight(LFSPEED)
                 #time.sleep(0.1)
-            elif LEFTLINE == 0 and RIGHTLINE == 0:
-                pz.forward(20)
+            if LEFTLINE == 0 and RIGHTLINE == 0:
+                pz.forward(10)
+            if LEFTLINE == 1 and RIGHTLINE == 1:
+                pz.reverse(10)
                 #time.sleep(0.1)
 
             
