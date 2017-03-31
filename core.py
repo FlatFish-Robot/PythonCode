@@ -124,7 +124,7 @@ def remotecontrol(): #works perfect
                         GO = 0
     
 
-def linefollower():
+def linefollower(): #works perfectly on a new set of batteries
     mylcd.lcd_display_string("Line Follower   ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
@@ -183,21 +183,10 @@ def automaze():
                 GO = 0
                 PREP = 0
                 
-    while GO == 1: #run actual speed test
+    while GO == 1: #new simple quit - works perfectly
         if button.is_pressed:
-            HOLD = 0
-            while HOLD == 0:
-                pz.stop()
-                mylcd.lcd_display_string("Switch to go    ", 1)
-                mylcd.lcd_display_string("Press E to EXIT ", 2)
-                for event in get_key(): 
-                    pz.stop()
-                    mylcd.lcd_display_string("Switch to go    ", 1)
-                    mylcd.lcd_display_string("Press E to EXIT ", 2)
-                    if event.code == "KEY_E":
-                       GO = 0
-                    if event.code == "KEY_G":
-                       HOLD = 0
+            pz.stop()
+            GO = 0
 
         else:
             RIGHTIR = pz.readInput(0) #assign right IR to a variable
@@ -281,21 +270,11 @@ def speedrun():
                 GO = 0
                 PREP = 0
                 
-    while GO == 1: #run actual speed test
+    while GO == 1: #new simple quit - works perfectly
         if button.is_pressed:
-            HOLD = 0
-            while HOLD == 0:
-                pz.stop()
-                mylcd.lcd_display_string("Switch to go    ", 1)
-                mylcd.lcd_display_string("Press E to EXIT ", 2)
-                for event in get_key(): 
-                    pz.stop()
-                    mylcd.lcd_display_string("Switch to go    ", 1)
-                    mylcd.lcd_display_string("Press E to EXIT ", 2)
-                    if event.code == "KEY_E":
-                       GO = 0
-                    if event.code == "KEY_G":
-                       HOLD = 0
+            pz.stop()
+            GO = 0
+            
         else:
             RIGHTIR = pz.readInput(0) 
             LEFTIR = pz.readInput(1)
