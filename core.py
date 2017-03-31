@@ -170,7 +170,8 @@ def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
-    speed = 100
+    MSPEED = 20
+    MTURN = 75
     GO = 1
     PREP = 1
     while PREP == 1: #get ready to go
@@ -195,50 +196,50 @@ def automaze():
             STEP = 0 # start step count
             mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
             mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
-            pz.forward(100)
+            pz.forward(MSPEED)
             
             #steps to follow to complete the maze
             if RANGE < 5 and STEP == 0: #first right turn
                 pz.stop()
-                pz.spinRight(100)
+                pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 1
             if RANGE < 5 and STEP == 1: #second right turn
                 pz.stop()
-                pz.spinRight(100)
+                pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 2
             if RANGE < 5 and STEP == 2: #third right
                 pz.stop()
-                pz.spinRight(100)
+                pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 3
             if RANGE < 5 and STEP == 2: #first left
                 pz.stop()
-                pz.spinLeft(100)
+                pz.spinLeft(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 4
             if RANGE < 5 and STEP == 4: #second left
                 pz.stop()
-                pz.spinLeft(100)
+                pz.spinLeft(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 5
             if RANGE < 5 and STEP == 5: #third left
                 pz.stop()
-                pz.spinLeft(100)
+                pz.spinLeft(MTURN)
                 time.sleep(0.8)
                 pz.stop()
-                pz.forward(100)
+                pz.forward(MSPEED)
                 STEP = 6
 
             #emergency wall avoidance protocol    
@@ -277,11 +278,7 @@ def speedrun():
             
         else:
             RIGHTIR = pz.readInput(0) 
-            LEFTIR = pz.readInput(1)
-            mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-            mylcd.lcd_display_string("Use switch=STOP ", 2)
-
-            
+            LEFTIR = pz.readInput(1)            
             if RIGHTIR == 0:
                 pz.spinLeft(100)
                 mylcd.lcd_display_string("Right IR on     ", 1)
