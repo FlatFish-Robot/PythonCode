@@ -1,6 +1,7 @@
 #code for flatfish Mark 6
 import piconzero as pz
 import time
+from gpiozero import button
 import sys
 from inputs import get_key
 import os
@@ -30,6 +31,8 @@ LEFTLINE = pz.readInput(3) #assign left line sensor to a variable
 
 hcsr04.init() #initiate hardware
 RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
+
+button = Button(22)
 
 #end of hardware setup
 #______________________________________________________________________________
@@ -140,21 +143,10 @@ def linefollower():
                 
     mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
     mylcd.lcd_display_string("Press S to STOP ", 2)
-    
-    while GO == 1: #line following program
-        RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
-        LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
-        if RIGHTLINE == 1:
-            pz.spinLeft(LFSPEED)
-        elif LEFTLINE == 1:
-            pz.spinRight(LFSPEED)
-            #time.sleep(0.1)
-        elif LEFTLINE == RIGHTLINE:
-            pz.forward(20)
-            #time.sleep(0.1)
-            
-        #keys for escape
-        for event in get_key(): #need to seperate keys and pins
+
+    while GO == 1:
+        if button.is_pressed:
+            for event in get_key(): #need to seperate keys and pins
             if event.code == "KEY_S":
                 pz.stop
                 HOLD = 1
@@ -169,8 +161,22 @@ def linefollower():
                            pz.stop
                            GO = 0
                            HOLD = 0
-                        #else:
-                           #time.sleep(0.5)
+                        
+        else:
+            RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
+            LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
+            if RIGHTLINE == 1:
+                pz.spinLeft(LFSPEED)
+            elif LEFTLINE == 1:
+                pz.spinRight(LFSPEED)
+                #time.sleep(0.1)
+            elif LEFTLINE == RIGHTLINE:
+                pz.forward(20)
+                #time.sleep(0.1)
+
+            
+        #keys for escape
+        
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
