@@ -159,10 +159,10 @@ def linefollower():
                 pz.spinLeft(LFSPEED)
                 #time.sleep(0.5)
             elif LEFTLINE == 0 and RIGHTLINE == 0:
-                pz.forward(20)
+                pz.forward(15)
                 #time.sleep(0.5)
             elif LEFTLINE == 1 and RIGHTLINE == 1:
-                pz.reverse(20)
+                pz.reverse(15)
                 #time.sleep(0.5)
                 
 def automaze():
