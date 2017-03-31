@@ -144,6 +144,7 @@ def linefollower():
                 
     while GO == 1: #new simple quit - works perfectly
         if button.is_pressed:
+            pz.stop()
             GO = 0
                                   
         else:
@@ -158,10 +159,10 @@ def linefollower():
                 pz.spinLeft(LFSPEED)
                 #time.sleep(0.5)
             elif LEFTLINE == 0 and RIGHTLINE == 0:
-                pz.forward(31)
+                pz.forward(12)
                 #time.sleep(0.5)
             elif LEFTLINE == 1 and RIGHTLINE == 1:
-                pz.reverse(31)
+                pz.reverse(12)
                 #time.sleep(0.5)
                 
 def automaze():
