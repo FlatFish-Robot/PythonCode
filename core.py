@@ -171,7 +171,7 @@ def automaze():
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     MSPEED = 20
-    MTURN = 75
+    MTURN = 90
     GO = 1
     PREP = 1
     while PREP == 1: #get ready to go
@@ -245,10 +245,10 @@ def automaze():
             #emergency wall avoidance protocol    
             if LEFTIR == 0:
                 pz.spinRight(100)
-                time.sleep(0.3)
+                time.sleep(0.1)
             elif RIGHTIR == 0:
                 pz.spinLeft(100)
-                time.sleep(0.3)
+                time.sleep(0.1)
 
 
 def speedrun():
