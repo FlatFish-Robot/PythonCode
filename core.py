@@ -154,42 +154,42 @@ def linefollower():
             #time.sleep(0.1)
             
         #keys for escape
-        for event in get_key(): #need to seperate keys and pins
-            if event.code == "KEY_S":
-                pz.stop
-                HOLD = 1
-                while HOLD == 1:
-                    for event in get_key(): 
-                        pz.stop()
-                        mylcd.lcd_display_string("Press G to GO   ", 1)
-                        mylcd.lcd_display_string("Press E to EXIT ", 2)
-                        if event.code == "KEY_G":
-                            HOLD == 0
-                        elif event.code == "KEY_E":
-                           pz.stop
-                           GO = 0
-                           HOLD = 0
-            else:
-                time.sleep(0.5)
+   #     for event in get_key(): #need to seperate keys and pins
+    #        if event.code == "KEY_S":
+     #           pz.stop
+      #          HOLD = 1
+       #         while HOLD == 1:
+        #            for event in get_key(): 
+         #               pz.stop()
+          #              mylcd.lcd_display_string("Press G to GO   ", 1)
+           #             mylcd.lcd_display_string("Press E to EXIT ", 2)
+            #            if event.code == "KEY_G":
+             #               HOLD == 0
+              #          elif event.code == "KEY_E":
+               #            pz.stop
+              #             GO = 0
+             #              HOLD = 0
+           # else:
+            #    time.sleep(0.5)
                 
 def automaze():
     mylcd.lcd_display_string("Auto Maze       ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
     speed = 100
-    GO = True
-    PREP = True
-    while PREP == True: #get ready to go
+    GO = 1
+    PREP = 1
+    while PREP == 1: #get ready to go
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
             mylcd.lcd_display_string("Press E to End  ", 2)
             if event.code == "KEY_G":
-                PREP = False
+                PREP = 0
             elif event.code == "KEY_E":
                 pz.stop
-                GO = False
-                PREP = False
-    while GO == True: #run actual speed test
+                GO = 0
+                PREP = 0
+    while GO == 1: #run actual speed test
         RIGHTIR = pz.readInput(0) #assign right IR to a variable
         LEFTIR = pz.readInput(1) #assign left IR to a variable
         RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
@@ -260,10 +260,10 @@ def automaze():
                         break
                     elif event.code == "KEY_S":
                        pz.stop
-                       GO = False
+                       GO = 0
             elif event.code == "KEY_E":
                 pz.stop
-                GO = False
+                GO = 0
                 break
             else:
                 time.sleep(0.5)
