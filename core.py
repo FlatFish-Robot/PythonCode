@@ -142,7 +142,7 @@ def linefollower():
                 GO = 0
                 PREP = 0
                 
-    while GO == 1:
+    while GO == 1: #new simple quit - works perfectly
         if button.is_pressed:
             GO = 0
                                   
