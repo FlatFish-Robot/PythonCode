@@ -42,7 +42,8 @@ button = Button(22)
 #functions for individual tasks
 
 
-def remotecontrol():
+def remotecontrol(): #works perfect
+    pz.stop()
     mylcd.lcd_display_string("Remote Control  ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
@@ -129,6 +130,7 @@ def linefollower():
     PREP = 1
     GO = 1
     LFSPEED = 100
+    pz.stop()
     
     while PREP == 1: #setup ready for line following
         for event in get_key():
@@ -142,26 +144,22 @@ def linefollower():
                 PREP = 0
                 
     mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-    mylcd.lcd_display_string("Press S to STOP ", 2)
+    mylcd.lcd_display_string("Use switch      ", 2)
 
     while GO == 1:
         if button.is_pressed:
-            for event in get_key(): #need to seperate keys and pins
-                if event.code == "KEY_S":
-                    pz.stop
-                    HOLD = 1
-                    while HOLD == 1:
-                        for event in get_key(): 
-                            pz.stop()
-                            mylcd.lcd_display_string("Press G to GO   ", 1)
-                            mylcd.lcd_display_string("Press E to EXIT ", 2)
-                            if event.code == "KEY_G":
-                                HOLD == 0
-                            elif event.code == "KEY_E":
-                               pz.stop
-                               GO = 0
-                               HOLD = 0
-                        
+            while True:
+                pz.stop()
+                mylcd.lcd_display_string("Switch to go    ", 1)
+                mylcd.lcd_display_string("Press E to EXIT ", 2)
+                for event in get_key(): 
+                    pz.stop()
+                    mylcd.lcd_display_string("Switch to go    ", 1)
+                    mylcd.lcd_display_string("Press E to EXIT ", 2)
+                    if event.code == "KEY_E":
+                       pz.stop
+                       GO = 0
+                       
         else:
             RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
             LEFTLINE = pz.readInput(3) #assign left line sensor to a variable   
@@ -175,12 +173,9 @@ def linefollower():
             elif LEFTLINE == 1 and RIGHTLINE == 1:
                 pz.reverse(10)
                 #time.sleep(0.1)
-
-            
-        #keys for escape
-        
                 
 def automaze():
+    pz.stop()
     mylcd.lcd_display_string("Auto Maze       ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
@@ -197,86 +192,85 @@ def automaze():
                 pz.stop
                 GO = 0
                 PREP = 0
+                
     while GO == 1: #run actual speed test
-        RIGHTIR = pz.readInput(0) #assign right IR to a variable
-        LEFTIR = pz.readInput(1) #assign left IR to a variable
-        RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
-        STEP = 0 # start step count
-        mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
-        mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
-        pz.forward(100)
-        
-        #steps to follow to complete the maze
-        if RANGE < 5 and STEP == 0: #first right turn
-            pz.stop()
-            pz.spinRight(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 1
-        if RANGE < 5 and STEP == 1: #second right turn
-            pz.stop()
-            pz.spinRight(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 2
-        if RANGE < 5 and STEP == 2: #third right
-            pz.stop()
-            pz.spinRight(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 3
-        if RANGE < 5 and STEP == 2: #first left
-            pz.stop()
-            pz.spinLeft(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 4
-        if RANGE < 5 and STEP == 4: #second left
-            pz.stop()
-            pz.spinLeft(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 5
-        if RANGE < 5 and STEP == 5: #third left
-            pz.stop()
-            pz.spinLeft(100)
-            time.sleep(0.8)
-            pz.stop()
-            pz.forward(100)
-            STEP = 6
-
-        #emergency wall avoidance protocol    
-        if leftIR == 0:
-            pz.spinRight(100)
-            time.sleep(0.3)
-        elif LEFTLINE == 0:
-            pz.spinLeft(100)
-            time.sleep(0.3)
-            
-        for event in get_key(): #need to seperate pins and keys
-            if event.code == "KEY_S":
-                pz.stop
-                while True:
-                    mylcd.lcd_display_string("Press G to GO   ", 1)
-                    mylcd.lcd_display_string("Press S to STOP ", 2)
-                    if event.code == "KEY_G":
-                        break
-                    elif event.code == "KEY_S":
+        if button.is_pressed:
+            while True:
+                pz.stop()
+                mylcd.lcd_display_string("Switch to go    ", 1)
+                mylcd.lcd_display_string("Press E to EXIT ", 2)
+                for event in get_key(): 
+                    pz.stop()
+                    mylcd.lcd_display_string("Switch to go    ", 1)
+                    mylcd.lcd_display_string("Press E to EXIT ", 2)
+                    if event.code == "KEY_E":
                        pz.stop
                        GO = 0
-            elif event.code == "KEY_E":
-                pz.stop
-                GO = 0
-                break
-            else:
-                time.sleep(0.5)
+
+        else:
+            RIGHTIR = pz.readInput(0) #assign right IR to a variable
+            LEFTIR = pz.readInput(1) #assign left IR to a variable
+            RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
+            STEP = 0 # start step count
+            mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+            mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+            pz.forward(100)
+            
+            #steps to follow to complete the maze
+            if RANGE < 5 and STEP == 0: #first right turn
+                pz.stop()
+                pz.spinRight(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 1
+            if RANGE < 5 and STEP == 1: #second right turn
+                pz.stop()
+                pz.spinRight(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 2
+            if RANGE < 5 and STEP == 2: #third right
+                pz.stop()
+                pz.spinRight(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 3
+            if RANGE < 5 and STEP == 2: #first left
+                pz.stop()
+                pz.spinLeft(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 4
+            if RANGE < 5 and STEP == 4: #second left
+                pz.stop()
+                pz.spinLeft(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 5
+            if RANGE < 5 and STEP == 5: #third left
+                pz.stop()
+                pz.spinLeft(100)
+                time.sleep(0.8)
+                pz.stop()
+                pz.forward(100)
+                STEP = 6
+
+            #emergency wall avoidance protocol    
+            if leftIR == 0:
+                pz.spinRight(100)
+                time.sleep(0.3)
+            elif LEFTLINE == 0:
+                pz.spinLeft(100)
+                time.sleep(0.3)
+
 
 def speedrun():
+    pz.stop()
     mylcd.lcd_display_string("Speed Run       ", 1)
     mylcd.lcd_display_string("Press E to End  ", 2)
     time.sleep(2)
@@ -296,37 +290,34 @@ def speedrun():
                 PREP = 0
                 
     while GO == 1: #run actual speed test
-        RIGHTIR = pz.readInput(0) 
-        LEFTIR = pz.readInput(1)
-        mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-        mylcd.lcd_display_string("Press S to STOP ", 2)
-
-        
-        if RIGHTIR == 1:
-            pz.spinLeft(100)
-            time.sleep(0.3)
-        elif LEFTIR == 1:
-            pz.spinRight(100)
-            time.sleep(0.3)
-        elif RIGHTIR == 0 and LEFTIR == 0:
-            pz.forward(100)
-
-            
-        for event in get_key(): #need to seperate pins and keys, the following code is the same for all functions
-            if event.code == "KEY_S":
-                pz.stop
-                HOLD = 1
-                while HOLD == 1:
-                    for event in get_key():
-                        pz.stop()
-                    mylcd.lcd_display_string("Press G to GO   ", 1)
+        if button.is_pressed:
+            while True:
+                pz.stop()
+                mylcd.lcd_display_string("Switch to go    ", 1)
+                mylcd.lcd_display_string("Press E to EXIT ", 2)
+                for event in get_key(): 
+                    pz.stop()
+                    mylcd.lcd_display_string("Switch to go    ", 1)
                     mylcd.lcd_display_string("Press E to EXIT ", 2)
-                    if event.code == "KEY_G":
-                        HOLD = 0
-                    elif event.code == "KEY_E":
+                    if event.code == "KEY_E":
                        pz.stop
                        GO = 0
-                       HOLD = 0
+        else:
+            RIGHTIR = pz.readInput(0) 
+            LEFTIR = pz.readInput(1)
+            mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
+            mylcd.lcd_display_string("Press S to STOP ", 2)
+
+            
+            if RIGHTIR == 1:
+                pz.spinLeft(100)
+                time.sleep(0.3)
+            elif LEFTIR == 1:
+                pz.spinRight(100)
+                time.sleep(0.3)
+            elif RIGHTIR == 0 and LEFTIR == 0:
+                pz.forward(100)
+
 
 #end functions
 #_____________________________________________________________________________
