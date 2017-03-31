@@ -147,20 +147,20 @@ def linefollower():
     while GO == 1:
         if button.is_pressed:
             for event in get_key(): #need to seperate keys and pins
-            if event.code == "KEY_S":
-                pz.stop
-                HOLD = 1
-                while HOLD == 1:
-                    for event in get_key(): 
-                        pz.stop()
-                        mylcd.lcd_display_string("Press G to GO   ", 1)
-                        mylcd.lcd_display_string("Press E to EXIT ", 2)
-                        if event.code == "KEY_G":
-                            HOLD == 0
-                        elif event.code == "KEY_E":
-                           pz.stop
-                           GO = 0
-                           HOLD = 0
+                if event.code == "KEY_S":
+                    pz.stop
+                    HOLD = 1
+                    while HOLD == 1:
+                        for event in get_key(): 
+                            pz.stop()
+                            mylcd.lcd_display_string("Press G to GO   ", 1)
+                            mylcd.lcd_display_string("Press E to EXIT ", 2)
+                            if event.code == "KEY_G":
+                                HOLD == 0
+                            elif event.code == "KEY_E":
+                               pz.stop
+                               GO = 0
+                               HOLD = 0
                         
         else:
             RIGHTLINE = pz.readInput(2) #assign right line sensor to a variable
