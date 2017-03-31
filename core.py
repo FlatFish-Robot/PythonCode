@@ -129,7 +129,7 @@ def linefollower():
     mylcd.lcd_display_string("Press E to End  ", 2)
     PREP = 1
     GO = 1
-    LFSPEED = 60 #only changes cornering speed
+    LFSPEED = 75 #only changes cornering speed
     pz.stop()
     
     while PREP == 1: #setup ready for line following
