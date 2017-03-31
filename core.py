@@ -282,15 +282,15 @@ def speedrun():
             mylcd.lcd_display_string("Use switch=STOP ", 2)
 
             
-            if RIGHTIR == 1:
+            if RIGHTIR == 0:
                 pz.spinLeft(100)
                 mylcd.lcd_display_string("Right IR on     ", 1)
                 mylcd.lcd_display_string("Use switch=STOP ", 2)
-            elif LEFTIR == 1:
+            elif LEFTIR == 0:
                 pz.spinRight(100)
                 mylcd.lcd_display_string("left IR on      ", 1)
                 mylcd.lcd_display_string("Use switch=STOP ", 2)
-            elif RIGHTIR == 0 and LEFTIR == 0:
+            elif RIGHTIR == 1 and LEFTIR == 1:
                 pz.forward(100)
                 mylcd.lcd_display_string("No IR on     ", 1)
                 mylcd.lcd_display_string("Use switch=STOP ", 2)
