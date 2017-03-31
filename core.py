@@ -279,17 +279,21 @@ def speedrun():
             RIGHTIR = pz.readInput(0) 
             LEFTIR = pz.readInput(1)
             mylcd.lcd_display_string("GO!!!!!!!!!!!   ", 1)
-            mylcd.lcd_display_string("Press S to STOP ", 2)
+            mylcd.lcd_display_string("Use switch=STOP ", 2)
 
             
             if RIGHTIR == 1:
                 pz.spinLeft(100)
-                time.sleep(0.3)
+                mylcd.lcd_display_string("Right IR on     ", 1)
+                mylcd.lcd_display_string("Use switch=STOP ", 2)
             elif LEFTIR == 1:
                 pz.spinRight(100)
-                time.sleep(0.3)
+                mylcd.lcd_display_string("left IR on      ", 1)
+                mylcd.lcd_display_string("Use switch=STOP ", 2)
             elif RIGHTIR == 0 and LEFTIR == 0:
                 pz.forward(100)
+                mylcd.lcd_display_string("No IR on     ", 1)
+                mylcd.lcd_display_string("Use switch=STOP ", 2)
 
 
 #end functions
