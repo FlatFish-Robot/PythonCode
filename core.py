@@ -1,7 +1,7 @@
 #code for flatfish Mark 6
 import piconzero as pz
 import time
-from gpiozero import button
+from gpiozero import Button
 import sys
 from inputs import get_key
 import os
