@@ -243,10 +243,10 @@ def automaze():
                 STEP = 6
 
             #emergency wall avoidance protocol    
-            if leftIR == 0:
+            if LEFTIR == 0:
                 pz.spinRight(100)
                 time.sleep(0.3)
-            elif LEFTLINE == 0:
+            elif RIGHTIR == 0:
                 pz.spinLeft(100)
                 time.sleep(0.3)
 
