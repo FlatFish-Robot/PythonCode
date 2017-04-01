@@ -202,42 +202,42 @@ def automaze():
             if RANGE < 25 and STEP == 0: #first right turn
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 1
             if RANGE < 25 and STEP == 1: #second right turn
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 2
             if RANGE < 25 and STEP == 2: #third right
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 3
             if RANGE < 25 and STEP == 2: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 4
             if RANGE < 25 and STEP == 4: #second left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 5
             if RANGE < 25 and STEP == 5: #third left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.1)
+                time.sleep(0.2)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 6
@@ -245,10 +245,10 @@ def automaze():
             #emergency wall avoidance protocol    
             if LEFTIR == 0:
                 pz.spinRight(100)
-                time.sleep(0.04)
+                time.sleep(0.02)
             elif RIGHTIR == 0:
                 pz.spinLeft(100)
-                time.sleep(0.04)
+                time.sleep(0.02)
 
 
 def speedrun():
