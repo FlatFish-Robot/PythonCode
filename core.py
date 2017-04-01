@@ -233,7 +233,7 @@ def automaze():
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
                 RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
-            if RANGE < 25 and STEP == 2: #first left
+            if RANGE < 25 and STEP == 3: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
                 time.sleep(0.5)
