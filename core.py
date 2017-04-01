@@ -209,6 +209,8 @@ def automaze():
                 STEP = 1
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
+
             if RANGE < 25 and STEP == 1: #second right turn
                 pz.stop()
                 pz.spinRight(MTURN)
@@ -219,6 +221,7 @@ def automaze():
                 STEP = 2
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             if RANGE < 25 and STEP == 2: #third right
                 pz.stop()
                 pz.spinRight(MTURN)
@@ -229,6 +232,7 @@ def automaze():
                 STEP = 3
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             if RANGE < 25 and STEP == 2: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -239,6 +243,7 @@ def automaze():
                 STEP = 4
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             if RANGE < 25 and STEP == 4: #second left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -249,6 +254,7 @@ def automaze():
                 STEP = 5
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             if RANGE < 25 and STEP == 5: #third left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -259,6 +265,7 @@ def automaze():
                 STEP = 6
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+                RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
 
             #emergency wall avoidance protocol    
             if LEFTIR == 0:
