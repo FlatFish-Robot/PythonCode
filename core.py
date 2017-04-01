@@ -202,54 +202,60 @@ def automaze():
             if RANGE < 25 and STEP == 0: #first right turn
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 1
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 1: #second right turn
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 2
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 2: #third right
                 pz.stop()
                 pz.spinRight(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 3
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 2: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 4
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 4: #second left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 5
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 5: #third left
                 pz.stop()
                 pz.spinLeft(MTURN)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 pz.stop()
                 pz.forward(MSPEED)
+                time.sleep(1)
                 STEP = 6
                 mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
                 mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
