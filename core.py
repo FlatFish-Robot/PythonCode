@@ -194,8 +194,8 @@ def automaze():
             LEFTIR = pz.readInput(1) #assign left IR to a variable
             RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             STEP = 0 # start step count
-            mylcd.lcd_display_string("Range = %d   " % RANGE, 1)
-            mylcd.lcd_display_string("Step = %d   " % STEP, 2)
+            mylcd.lcd_display_string("Range = %d %" % RANGE, 1)
+            mylcd.lcd_display_string("Step = %d %" % STEP, 2)
             pz.forward(MSPEED)
             
             #steps to follow to complete the maze
