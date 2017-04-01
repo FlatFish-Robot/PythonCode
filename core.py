@@ -206,6 +206,8 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 1
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 1: #second right turn
                 pz.stop()
                 pz.spinRight(MTURN)
@@ -213,6 +215,8 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 2
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 2: #third right
                 pz.stop()
                 pz.spinRight(MTURN)
@@ -220,6 +224,8 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 3
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 2: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -227,6 +233,8 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 4
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 4: #second left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -234,6 +242,8 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 5
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             if RANGE < 25 and STEP == 5: #third left
                 pz.stop()
                 pz.spinLeft(MTURN)
@@ -241,14 +251,16 @@ def automaze():
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 6
+                mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
+                mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
 
             #emergency wall avoidance protocol    
             if LEFTIR == 0:
                 pz.spinRight(100)
-                time.sleep(0.02)
+                time.sleep(0.01)
             elif RIGHTIR == 0:
                 pz.spinLeft(100)
-                time.sleep(0.02)
+                time.sleep(0.01)
 
 
 def speedrun():
