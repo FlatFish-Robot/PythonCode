@@ -194,47 +194,47 @@ def automaze():
             LEFTIR = pz.readInput(1) #assign left IR to a variable
             RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
             STEP = 0 # start step count
-            mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
-            mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
+            mylcd.lcd_display_string("Range = %d   " % RANGE, 1)
+            mylcd.lcd_display_string("Step = %d   " % STEP, 2)
             pz.forward(MSPEED)
             
             #steps to follow to complete the maze
-            if RANGE < 5 and STEP == 0: #first right turn
+            if RANGE < 8 and STEP == 0: #first right turn
                 pz.stop()
                 pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 1
-            if RANGE < 5 and STEP == 1: #second right turn
+            if RANGE < 8 and STEP == 1: #second right turn
                 pz.stop()
                 pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 2
-            if RANGE < 5 and STEP == 2: #third right
+            if RANGE < 8 and STEP == 2: #third right
                 pz.stop()
                 pz.spinRight(MTURN)
                 time.sleep(0.8)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 3
-            if RANGE < 5 and STEP == 2: #first left
+            if RANGE < 8 and STEP == 2: #first left
                 pz.stop()
                 pz.spinLeft(MTURN)
                 time.sleep(0.8)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 4
-            if RANGE < 5 and STEP == 4: #second left
+            if RANGE < 8 and STEP == 4: #second left
                 pz.stop()
                 pz.spinLeft(MTURN)
                 time.sleep(0.8)
                 pz.stop()
                 pz.forward(MSPEED)
                 STEP = 5
-            if RANGE < 5 and STEP == 5: #third left
+            if RANGE < 8 and STEP == 5: #third left
                 pz.stop()
                 pz.spinLeft(MTURN)
                 time.sleep(0.8)
