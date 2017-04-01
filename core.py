@@ -174,6 +174,7 @@ def automaze():
     MTURN = 90
     GO = 1
     PREP = 1
+    STEP = 0 # start step count
     while PREP == 1: #get ready to go
         for event in get_key():
             mylcd.lcd_display_string("Press G to GO   ", 1)
@@ -193,7 +194,6 @@ def automaze():
             RIGHTIR = pz.readInput(0) #assign right IR to a variable
             LEFTIR = pz.readInput(1) #assign left IR to a variable
             RANGE = hcsr04.getDistance() #assign HC-SR04 range to variable
-            STEP = 0 # start step count
             mylcd.lcd_display_string("Range = %d %%" % RANGE, 1)
             mylcd.lcd_display_string("Step = %d %%" % STEP, 2)
             pz.forward(MSPEED)
