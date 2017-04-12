@@ -6,4 +6,4 @@
 #git clone https://mockersACE:rock1np1!@github.com/FlatFish-Robot/PythonCode.git
 
 cd PythonCode
-git pull https://mockersACE:crazyCat53@github.com/FlatFish-Robot/PythonCode.git
+git pull https://username:password@github.com/FlatFish-Robot/PythonCode.git
